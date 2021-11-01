@@ -13,6 +13,7 @@ RationalNum::RationalNum(long long numerator, long long denominator) {
 	}
 	m_numerator = numerator;
 	m_denominator = denominator;
+	simlify();
 }
 
 long long RationalNum::get_numerator() {
@@ -32,7 +33,7 @@ long long RationalNum::gcd(long long a, long long b) {
 	return a;
 }
 
-// diving numerator and denominator by their gcd
+// diving numerator and denominator by their gcd.
 void RationalNum::simlify() {
 	if (m_numerator == 0) {
 		m_denominator = 1;
@@ -45,4 +46,20 @@ void RationalNum::simlify() {
 		m_numerator = -m_numerator;
 		m_denominator = -m_denominator;
 	}
+}
+
+// because of operating with irreducible fractions, checking equality of numerators and denominators
+bool operator==(const RationalNum& left, const RationalNum& right) {
+	return left.m_numerator == right.m_numerator && left.m_denominator == right.m_denominator;
+}
+
+bool operator!=(const RationalNum& left, const RationalNum& right) {
+	return !(left == right);
+}
+
+// Adding two fractions using formula: a/b + c/d = (a*d+b*c)/(b*d), and simlifying the result.
+RationalNum operator+(const RationalNum& left, const RationalNum& right) {
+	RationalNum res(left.m_numerator * right.m_denominator + left.m_denominator * right.m_numerator, left.m_denominator* right.m_denominator);
+	res.simlify();
+	return res;
 }

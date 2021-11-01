@@ -7,65 +7,130 @@ TEST(RationalNumTest, ZeroArgumentConstructor) {
 	EXPECT_EQ(a.get_numerator(), 0);
 	EXPECT_EQ(a.get_denominator(), 1);
 }
+
 TEST(RationalNumTest, TwoArgumentConstructor) {
-	RationalNum r1(5,7);
+	RationalNum r1(5, 7);
 	EXPECT_EQ(r1.get_numerator(), 5);
 	EXPECT_EQ(r1.get_denominator(), 7);
 
 	RationalNum r2(12, 3);
-	EXPECT_EQ(r2.get_numerator(), 12);
-	EXPECT_EQ(r2.get_denominator(), 3);
+	EXPECT_EQ(r2.get_numerator(), 4);
+	EXPECT_EQ(r2.get_denominator(), 1);
 
 	RationalNum r3(0, 3);
 	EXPECT_EQ(r3.get_numerator(), 0);
-	EXPECT_EQ(r3.get_denominator(), 3);
+	EXPECT_EQ(r3.get_denominator(), 1);
 
-	RationalNum r4(-5, 7);
-	EXPECT_EQ(r4.get_numerator(), -5);
-	EXPECT_EQ(r4.get_denominator(), 7);
+	RationalNum r4(3, 9);
+	EXPECT_EQ(r4.get_numerator(), 1);
+	EXPECT_EQ(r4.get_denominator(), 3);
 
-	RationalNum r5(-12, 3);
-	EXPECT_EQ(r5.get_numerator(), -12);
-	EXPECT_EQ(r5.get_denominator(), 3);
+	RationalNum r5(-5, 7);
+	EXPECT_EQ(r5.get_numerator(), -5);
+	EXPECT_EQ(r5.get_denominator(), 7);
+
+	RationalNum r6(-12, 3);
+	EXPECT_EQ(r6.get_numerator(), -4);
+	EXPECT_EQ(r6.get_denominator(), 1);
+
+	RationalNum r7(-3, 9);
+	EXPECT_EQ(r7.get_numerator(), -1);
+	EXPECT_EQ(r7.get_denominator(), 3);
 
 	EXPECT_ANY_THROW(RationalNum r6(3, 0););
 
 	EXPECT_ANY_THROW(RationalNum r7(3, -2););
 }
 
-TEST(RationalNumTest, simlify) {
-	RationalNum r1(5, 7);
-	r1.simlify();
-	EXPECT_EQ(r1.get_numerator(), 5);
-	EXPECT_EQ(r1.get_denominator(), 7);
+TEST(RationalNumTest, Equality) {
+	RationalNum r1_1(1, 2), r1_2(1, 2);
+	EXPECT_TRUE(r1_1 == r1_2);
 
-	RationalNum r2(12, 3);
-	r2.simlify();
-	EXPECT_EQ(r2.get_numerator(), 4);
-	EXPECT_EQ(r2.get_denominator(), 1);
+	RationalNum r2_1(-1, 2), r2_2(-1, 2);
+	EXPECT_TRUE(r2_1 == r2_2);
 
-	RationalNum r3(0, 3);
-	r3.simlify();
-	EXPECT_EQ(r3.get_numerator(), 0);
-	EXPECT_EQ(r3.get_denominator(), 1);
+	RationalNum r3_1(-1, 2), r3_2(1, 2);
+	EXPECT_FALSE(r3_1 == r3_2);
 
-	RationalNum r4(3, 9);
-	r4.simlify();
-	EXPECT_EQ(r4.get_numerator(), 1);
-	EXPECT_EQ(r4.get_denominator(), 3);
+	RationalNum r4_1(1, 2), r4_2(-1, 2);
+	EXPECT_FALSE(r4_1 == r4_2);
 
-	RationalNum r5(-5, 7);
-	r5.simlify();
-	EXPECT_EQ(r5.get_numerator(), -5);
-	EXPECT_EQ(r5.get_denominator(), 7);
+	RationalNum r5_1(1, 3), r5_2(-1, 3);
+	EXPECT_FALSE(r5_1 == r5_2);
 
-	RationalNum r6(-12, 3);
-	r6.simlify();
-	EXPECT_EQ(r6.get_numerator(), -4);
-	EXPECT_EQ(r6.get_denominator(), 1);
+	RationalNum r6_1(1, 3), r6_2(1, 4);
+	EXPECT_FALSE(r6_1 == r6_2);
 
-	RationalNum r7(-3, 9);
-	r7.simlify();
-	EXPECT_EQ(r7.get_numerator(), -1);
-	EXPECT_EQ(r7.get_denominator(), 3);
+	RationalNum r7_1(1, 3), r7_2(-1, 4);
+	EXPECT_FALSE(r7_1 == r7_2);
+
+	RationalNum r8_1(0, 1), r8_2(0, 3);
+	EXPECT_TRUE(r8_1 == r8_2);
+}
+
+TEST(RationalNumTest, Inequality) {
+	RationalNum r1_1(1, 2), r1_2(1, 2);
+	EXPECT_FALSE(r1_1 != r1_2);
+
+	RationalNum r2_1(-1, 2), r2_2(-1, 2);
+	EXPECT_FALSE(r2_1 != r2_2);
+
+	RationalNum r3_1(-1, 2), r3_2(1, 2);
+	EXPECT_TRUE(r3_1 != r3_2);
+
+	RationalNum r4_1(1, 2), r4_2(-1, 2);
+	EXPECT_TRUE(r4_1 != r4_2);
+
+	RationalNum r5_1(1, 3), r5_2(-1, 3);
+	EXPECT_TRUE(r5_1 != r5_2);
+
+	RationalNum r6_1(1, 3), r6_2(1, 4);
+	EXPECT_TRUE(r6_1 != r6_2);
+
+	RationalNum r7_1(1, 3), r7_2(-1, 4);
+	EXPECT_TRUE(r7_1 != r7_2);
+
+	RationalNum r8_1(0, 1), r8_2(0, 3);
+	EXPECT_FALSE(r8_1 != r8_2);
+}
+
+TEST(RationalNumTest, Addition) {
+	RationalNum r1_1(1, 2), r1_2(1, 2);
+	EXPECT_EQ(r1_1 + r1_2, RationalNum(1, 1));
+
+	RationalNum r2_1(1, 2), r2_2(-1, 2);
+	EXPECT_EQ(r2_1 + r2_2, RationalNum(0, 1));
+
+	RationalNum r3_1(-1, 2), r3_2(-1, 2);
+	EXPECT_EQ(r3_1 + r3_2, RationalNum(-1, 1));
+
+	RationalNum r4_1(1, 3), r4_2(1, 4);
+	EXPECT_EQ(r4_1 + r4_2, RationalNum(7, 12));
+
+	RationalNum r5_1(1, 3), r5_2(-1, 4);
+	EXPECT_EQ(r5_1 + r5_2, RationalNum(1, 12));
+
+	RationalNum r6_1(-1, 3), r6_2(1, 4);
+	EXPECT_EQ(r6_1 + r6_2, RationalNum(-1, 12));
+
+	RationalNum r7_1(-1, 3), r7_2(-1, 4);
+	EXPECT_EQ(r7_1 + r7_2, RationalNum(-7, 12));
+
+	// 1/4 + 1/6 = 5/12
+	RationalNum r8_1(1, 4), r8_2(1, 6);
+	EXPECT_EQ(r8_1 + r8_2, RationalNum(5, 12));
+
+	// 1/6 + 1/3 = 6/12 = 1/2
+	RationalNum r9_1(1, 6), r9_2(1, 3);
+	EXPECT_EQ(r9_1 + r9_2, RationalNum(1, 2));
+
+	RationalNum r10_1(-1, 6), r10_2(-1, 3);
+	EXPECT_EQ(r10_1 + r10_2, RationalNum(-1, 2));
+
+	// 1/3 - 1/6 = 2/12 = 1/6
+	RationalNum r11_1(-1, 6), r11_2(1, 3);
+	EXPECT_EQ(r11_1 + r11_2, RationalNum(1, 6));
+
+	RationalNum r12_1(1, 6), r12_2(-1, 3);
+	EXPECT_EQ(r12_1 + r12_2, RationalNum(-1, 6));
 }
