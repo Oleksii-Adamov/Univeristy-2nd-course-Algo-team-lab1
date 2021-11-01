@@ -81,3 +81,13 @@ RationalNum operator*(const RationalNum& left, const RationalNum& right) {
 	res.simlify();
 	return res;
 }
+
+// Division of  two fractions using formula: (a/b) / (c/d) = (ad)/(bc), and simlifying the result.
+RationalNum operator/(const RationalNum& left, const RationalNum& right) {
+	if (right.m_numerator == 0) {
+		throw "Division by zero!";
+	}
+	RationalNum res(left.m_numerator * right.m_denominator, left.m_denominator * right.m_numerator);
+	res.simlify();
+	return res;
+}

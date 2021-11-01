@@ -236,4 +236,64 @@ TEST(RationalNumTest, Multiplication) {
 	RationalNum r13_1(0, 1), r13_2(-1, 3);
 	EXPECT_EQ(r13_1 * r13_2, RationalNum(0, 1));
 	EXPECT_EQ(r13_2 * r13_1, RationalNum(0, 1));
+
+	RationalNum r14_1(1, 3), r14_2(-1, 1);
+	EXPECT_EQ(r14_1 * r14_2, RationalNum(-1, 3));
+	EXPECT_EQ(r14_2 * r14_1, RationalNum(-1, 3));
+
+	RationalNum r15_1(-1, 3), r15_2(-1, 1);
+	EXPECT_EQ(r15_1 * r15_2, RationalNum(1, 3));
+	EXPECT_EQ(r15_2 * r15_1, RationalNum(1, 3));
+}
+
+TEST(RationalNumTest, Division) {
+	RationalNum r1_1(1, 2), r1_2(1, 2);
+	EXPECT_EQ(r1_1 / r1_2, RationalNum(1, 1));
+
+	RationalNum r2_1(1, 2), r2_2(-1, 2);
+	EXPECT_EQ(r2_1 / r2_2, RationalNum(-1, 1));
+
+	RationalNum r3_1(-1, 2), r3_2(-1, 2);
+	EXPECT_EQ(r3_1 / r3_2, RationalNum(1, 1));
+
+	RationalNum r4_1(1, 3), r4_2(1, 4);
+	EXPECT_EQ(r4_1 / r4_2, RationalNum(4, 3));
+
+	RationalNum r5_1(1, 3), r5_2(-1, 4);
+	EXPECT_EQ(r5_1 / r5_2, RationalNum(-4, 3));
+
+	RationalNum r6_1(-1, 3), r6_2(1, 4);
+	EXPECT_EQ(r6_1 / r6_2, RationalNum(-4, 3));
+
+	RationalNum r7_1(-1, 3), r7_2(-1, 4);
+	EXPECT_EQ(r7_1 / r7_2, RationalNum(4, 3));
+	
+	// (1/3) / (2/3) = 1/2
+	RationalNum r8_1(1, 3), r8_2(2, 3);
+	EXPECT_EQ(r8_1 / r8_2, RationalNum(1, 2));
+
+	RationalNum r9_1(1, 3), r9_2(-2, 3);
+	EXPECT_EQ(r9_1 / r9_2, RationalNum(-1, 2));
+
+	RationalNum r10_1(-1, 3), r10_2(2, 3);
+	EXPECT_EQ(r10_1 / r10_2, RationalNum(-1, 2));
+
+	RationalNum r11_1(-1, 3), r11_2(-2, 3);
+	EXPECT_EQ(r11_1 / r11_2, RationalNum(1, 2));
+
+	RationalNum r12_1(0, 1), r12_2(1, 3);
+	EXPECT_EQ(r12_1 / r12_2, RationalNum(0, 1));
+	EXPECT_ANY_THROW(r12_2 / r12_1);
+
+	RationalNum r13_1(0, 1), r13_2(-1, 3);
+	EXPECT_EQ(r13_1 / r13_2, RationalNum(0, 1));
+	EXPECT_ANY_THROW(r13_2 / r13_1);
+
+	RationalNum r14_1(1, 3), r14_2(-1, 1);
+	EXPECT_EQ(r14_1 / r14_2, RationalNum(-1, 3));
+	EXPECT_EQ(r14_2 / r14_1, RationalNum(-3, 1));
+
+	RationalNum r15_1(-1, 3), r15_2(-1, 1);
+	EXPECT_EQ(r15_1 / r15_2, RationalNum(1, 3));
+	EXPECT_EQ(r15_2 / r15_1, RationalNum(3, 1));
 }
