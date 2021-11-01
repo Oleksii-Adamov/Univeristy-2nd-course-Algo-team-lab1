@@ -48,6 +48,19 @@ TEST(RationalNumTest, TwoArgumentConstructor) {
 	EXPECT_EQ(r10.get_denominator(), 2);
 }
 
+TEST(RationalNumTest, Assignment) {
+	RationalNum r = RationalNum(5,7);
+	EXPECT_EQ(r.get_numerator(), 5);
+	EXPECT_EQ(r.get_denominator(), 7);
+
+	r = RationalNum(-5, 7);
+	EXPECT_EQ(r.get_numerator(), -5);
+	EXPECT_EQ(r.get_denominator(), 7);
+
+	r = RationalNum(0, 1);
+	EXPECT_EQ(r.get_numerator(), 0);
+	EXPECT_EQ(r.get_denominator(), 1);
+}
 TEST(RationalNumTest, Equality) {
 	RationalNum r1_1(1, 2), r1_2(1, 2);
 	EXPECT_TRUE(r1_1 == r1_2);
@@ -296,4 +309,86 @@ TEST(RationalNumTest, Division) {
 	RationalNum r15_1(-1, 3), r15_2(-1, 1);
 	EXPECT_EQ(r15_1 / r15_2, RationalNum(1, 3));
 	EXPECT_EQ(r15_2 / r15_1, RationalNum(3, 1));
+}
+
+TEST(RationalNumTest, ToPow) {
+	RationalNum r(2, 3);
+	r = r.to_pow(2);
+	EXPECT_EQ(r.get_numerator(), 4);
+	EXPECT_EQ(r.get_denominator(), 9);
+
+	r = RationalNum(-2, 3);
+	r = r.to_pow(2);
+	EXPECT_EQ(r.get_numerator(), 4);
+	EXPECT_EQ(r.get_denominator(), 9);
+
+	r = RationalNum(2, 3);
+	r = r.to_pow(3);
+	EXPECT_EQ(r.get_numerator(), 8);
+	EXPECT_EQ(r.get_denominator(), 27);
+
+	r = RationalNum(-2, 3);
+	r = r.to_pow(3);
+	EXPECT_EQ(r.get_numerator(), -8);
+	EXPECT_EQ(r.get_denominator(), 27);
+
+	r = RationalNum(2, 3);
+	r = r.to_pow(1);
+	EXPECT_EQ(r.get_numerator(), 2);
+	EXPECT_EQ(r.get_denominator(), 3);
+
+	r = RationalNum(-2, 3);
+	r = r.to_pow(1);
+	EXPECT_EQ(r.get_numerator(), -2);
+	EXPECT_EQ(r.get_denominator(), 3);
+
+	r = RationalNum(2, 3);
+	r = r.to_pow(-1);
+	EXPECT_EQ(r.get_numerator(), 3);
+	EXPECT_EQ(r.get_denominator(), 2);
+
+	r = RationalNum(-2, 3);
+	r = r.to_pow(-1);
+	EXPECT_EQ(r.get_numerator(), -3);
+	EXPECT_EQ(r.get_denominator(), 2);
+
+	r = RationalNum(2, 3);
+	r = r.to_pow(0);
+	EXPECT_EQ(r.get_numerator(), 1);
+	EXPECT_EQ(r.get_denominator(), 1);
+
+	r = RationalNum(2, 3);
+	r = r.to_pow(-2);
+	EXPECT_EQ(r.get_numerator(), 9);
+	EXPECT_EQ(r.get_denominator(), 4);
+
+	r = RationalNum(-2, 3);
+	r = r.to_pow(-2);
+	EXPECT_EQ(r.get_numerator(), 9);
+	EXPECT_EQ(r.get_denominator(), 4);
+
+	r = RationalNum(2, 3);
+	r = r.to_pow(-3);
+	EXPECT_EQ(r.get_numerator(), 27);
+	EXPECT_EQ(r.get_denominator(), 8);
+
+	r = RationalNum(-2, 3);
+	r = r.to_pow(-3);
+	EXPECT_EQ(r.get_numerator(), -27);
+	EXPECT_EQ(r.get_denominator(), 8);
+
+	r = RationalNum(0, 1);
+	r = r.to_pow(0);
+	EXPECT_EQ(r.get_numerator(), 1);
+	EXPECT_EQ(r.get_denominator(), 1);
+
+	r = RationalNum(0, 1);
+	r = r.to_pow(2);
+	EXPECT_EQ(r.get_numerator(), 0);
+	EXPECT_EQ(r.get_denominator(), 1);
+
+	r = RationalNum(0, 1);
+	EXPECT_ANY_THROW(r = r.to_pow(-2););
+
+
 }

@@ -18,6 +18,9 @@ public:
 	friend RationalNum operator-(const RationalNum& left, const RationalNum& right);
 	friend RationalNum operator*(const RationalNum& left, const RationalNum& right);
 	friend RationalNum operator/(const RationalNum& left, const RationalNum& right);
+	RationalNum(const RationalNum& other);
+	RationalNum& operator=(const RationalNum& other);
+	RationalNum to_pow(long long exponent);
 	/*
 	long long to_pow(long long exponent);
 	friend std::ostream& operator<<(std::ostream& out, const RationalNum& num);*/

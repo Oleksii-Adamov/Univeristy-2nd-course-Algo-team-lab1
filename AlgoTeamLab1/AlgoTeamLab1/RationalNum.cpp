@@ -1,5 +1,6 @@
 #include "RationalNum.h"
-#include<numeric>
+#include <numeric>
+#include <math.h>
 
 RationalNum::RationalNum() :
 	m_numerator(0), m_denominator(1) 
@@ -89,5 +90,39 @@ RationalNum operator/(const RationalNum& left, const RationalNum& right) {
 	}
 	RationalNum res(left.m_numerator * right.m_denominator, left.m_denominator * right.m_numerator);
 	res.simlify();
+	return res;
+}
+
+RationalNum::RationalNum(const RationalNum& other)
+	: m_numerator(other.m_numerator), m_denominator(other.m_denominator) 
+{
+
+}
+
+RationalNum& RationalNum::operator=(const RationalNum& other) {
+	m_numerator = other.m_numerator;
+	m_denominator = other.m_denominator;
+	return *this;
+}
+
+// using std::pow because it uses assembly commands - so quicker
+RationalNum RationalNum::to_pow(long long exponent) {
+	if (exponent == 0) {
+		return RationalNum(1, 1);
+	}
+	RationalNum res = *this;
+	if (exponent < 0) {
+		if (res.m_numerator == 0) {
+			throw "Division by zero! (to_pow)";
+		}
+		std::swap(res.m_numerator, res.m_denominator);
+		if (res.m_denominator < 0) {
+			res.m_numerator = -res.m_numerator;
+			res.m_denominator = -res.m_denominator;
+		}
+		exponent = -exponent;
+	}
+	res.m_numerator = (long long) std::pow(res.m_numerator, exponent);
+	res.m_denominator = (long long)std::pow(res.m_denominator, exponent);
 	return res;
 }
