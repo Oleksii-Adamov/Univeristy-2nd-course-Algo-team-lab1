@@ -120,6 +120,10 @@ TEST(RationalNumTest, Addition) {
 
 	RationalNum r2_1(1, 2), r2_2(-1, 2);
 	EXPECT_EQ(r2_1 + r2_2, RationalNum(0, 1));
+	
+	// one test for +=
+	r2_1 += r2_2;
+	EXPECT_EQ(r2_1, RationalNum(0, 1));
 
 	RationalNum r3_1(-1, 2), r3_2(-1, 2);
 	EXPECT_EQ(r3_1 + r3_2, RationalNum(-1, 1));
@@ -170,6 +174,10 @@ TEST(RationalNumTest, Subraction) {
 	RationalNum r2_1(1, 2), r2_2(-1, 2);
 	EXPECT_EQ(r2_1 - r2_2, RationalNum(1, 1));
 
+	// one test for -=
+	r2_1 -= r2_2;
+	EXPECT_EQ(r2_1, RationalNum(1, 1));
+
 	RationalNum r3_1(-1, 2), r3_2(-1, 2);
 	EXPECT_EQ(r3_1 - r3_2, RationalNum(0, 1));
 
@@ -215,6 +223,10 @@ TEST(RationalNumTest, Multiplication) {
 
 	RationalNum r2_1(1, 2), r2_2(-1, 2);
 	EXPECT_EQ(r2_1 * r2_2, RationalNum(-1, 4));
+
+	// one test for *=
+	r2_1 *= r2_2;
+	EXPECT_EQ(r2_1, RationalNum(-1, 4));
 
 	RationalNum r3_1(-1, 2), r3_2(-1, 2);
 	EXPECT_EQ(r3_1 * r3_2, RationalNum(1, 4));
@@ -266,6 +278,10 @@ TEST(RationalNumTest, Division) {
 
 	RationalNum r2_1(1, 2), r2_2(-1, 2);
 	EXPECT_EQ(r2_1 / r2_2, RationalNum(-1, 1));
+
+	// one test for /=
+	r2_1 /= r2_2;
+	EXPECT_EQ(r2_1, RationalNum(-1, 1));
 
 	RationalNum r3_1(-1, 2), r3_2(-1, 2);
 	EXPECT_EQ(r3_1 / r3_2, RationalNum(1, 1));

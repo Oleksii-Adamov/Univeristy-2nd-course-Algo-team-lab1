@@ -8,7 +8,8 @@ RationalNum::RationalNum() :
 
 }
 
-RationalNum::RationalNum(long long numerator, long long denominator) {
+void RationalNum::set(long long numerator, long long denominator)
+{
 	if (denominator == 0) {
 		throw "Denominator cannot be equal to zero!";
 	}
@@ -19,6 +20,10 @@ RationalNum::RationalNum(long long numerator, long long denominator) {
 		m_denominator = -m_denominator;
 	}
 	simlify();
+}
+
+RationalNum::RationalNum(long long numerator, long long denominator) {
+	set(numerator, denominator);
 }
 
 long long RationalNum::get_numerator() {
@@ -170,4 +175,24 @@ bool operator>(const RationalNum& left, const RationalNum& right) {
 
 bool operator>=(const RationalNum& left, const RationalNum& right) {
 	return left.m_numerator * right.m_denominator >= left.m_denominator * right.m_numerator;
+}
+
+RationalNum& RationalNum::operator+=(const RationalNum& other) {
+	*this = *this + other;
+	return *this;
+}
+
+RationalNum& RationalNum::operator-=(const RationalNum& other) {
+	*this = *this - other;
+	return *this;
+}
+
+RationalNum& RationalNum::operator*=(const RationalNum& other) {
+	*this = *this * other;
+	return *this;
+}
+
+RationalNum& RationalNum::operator/=(const RationalNum& other) {
+	*this = *this / other;
+	return *this;
 }
