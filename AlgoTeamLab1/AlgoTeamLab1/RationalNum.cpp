@@ -34,6 +34,10 @@ long long RationalNum::gcd(long long a, long long b) {
 
 // diving numerator and denominator by their gcd
 void RationalNum::simlify() {
+	if (m_numerator == 0) {
+		m_denominator = 1;
+		return;
+	}
 	long long n_d_gcd = gcd(m_numerator, m_denominator);
 	m_numerator /= n_d_gcd;
 	m_denominator /= n_d_gcd;
