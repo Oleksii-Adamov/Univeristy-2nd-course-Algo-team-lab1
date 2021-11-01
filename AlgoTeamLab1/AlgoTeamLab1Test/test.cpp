@@ -507,3 +507,48 @@ TEST(RationalNumTest, Istream) {
 	EXPECT_ANY_THROW(in >> r);
 	in.close();
 }
+
+TEST(RationalNumTest, Ordering) {
+	RationalNum r1(1, 3), r2(2, 3);
+	EXPECT_TRUE(r1 < r2);
+	EXPECT_TRUE(r1 <= r2);
+	EXPECT_FALSE(r1 > r2);
+	EXPECT_FALSE(r1 >= r2);
+	EXPECT_TRUE(r2 > r1);
+	EXPECT_TRUE(r2 >= r1);
+	EXPECT_FALSE(r2 < r1);
+	EXPECT_FALSE(r2 <= r1);
+
+	r1 = RationalNum(1, 3);
+	r2 = RationalNum(1, 2);
+	EXPECT_TRUE(r1 < r2);
+	EXPECT_TRUE(r1 <= r2);
+	EXPECT_FALSE(r1 > r2);
+	EXPECT_FALSE(r1 >= r2);
+	EXPECT_TRUE(r2 > r1);
+	EXPECT_TRUE(r2 >= r1);
+	EXPECT_FALSE(r2 < r1);
+	EXPECT_FALSE(r2 <= r1);
+
+	r1 = RationalNum(1, 2);
+	r2 = RationalNum(1, 2);
+	EXPECT_FALSE(r1 < r2);
+	EXPECT_TRUE(r1 <= r2);
+	EXPECT_FALSE(r1 > r2);
+	EXPECT_TRUE(r1 >= r2);
+	EXPECT_FALSE(r2 > r1);
+	EXPECT_TRUE(r2 >= r1);
+	EXPECT_FALSE(r2 < r1);
+	EXPECT_TRUE(r2 <= r1);
+
+	r1 = RationalNum(-1, 2);
+	r2 = RationalNum(1, 3);
+	EXPECT_TRUE(r1 < r2);
+	EXPECT_TRUE(r1 <= r2);
+	EXPECT_FALSE(r1 > r2);
+	EXPECT_FALSE(r1 >= r2);
+	EXPECT_TRUE(r2 > r1);
+	EXPECT_TRUE(r2 >= r1);
+	EXPECT_FALSE(r2 < r1);
+	EXPECT_FALSE(r2 <= r1);
+}

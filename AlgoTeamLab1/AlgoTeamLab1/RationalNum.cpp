@@ -155,3 +155,19 @@ std::istream& operator>>(std::istream& in, RationalNum& num) {
 	num.simlify();
 	return in;
 }
+// (a/b) < (c/d) if and only if ad < bc (considering canonical form)
+bool operator<(const RationalNum& left, const RationalNum& right) {
+	return left.m_numerator * right.m_denominator < left.m_denominator * right.m_numerator;
+}
+
+bool operator<=(const RationalNum& left, const RationalNum& right) {
+	return left.m_numerator * right.m_denominator <= left.m_denominator* right.m_numerator;
+}
+
+bool operator>(const RationalNum& left, const RationalNum& right) {
+	return left.m_numerator * right.m_denominator > left.m_denominator* right.m_numerator;
+}
+
+bool operator>=(const RationalNum& left, const RationalNum& right) {
+	return left.m_numerator * right.m_denominator >= left.m_denominator * right.m_numerator;
+}
