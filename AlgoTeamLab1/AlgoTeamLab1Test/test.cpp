@@ -37,9 +37,15 @@ TEST(RationalNumTest, TwoArgumentConstructor) {
 	EXPECT_EQ(r7.get_numerator(), -1);
 	EXPECT_EQ(r7.get_denominator(), 3);
 
-	EXPECT_ANY_THROW(RationalNum r6(3, 0););
+	EXPECT_ANY_THROW(RationalNum r8(3, 0););
 
-	EXPECT_ANY_THROW(RationalNum r7(3, -2););
+	RationalNum r9(3, -2);
+	EXPECT_EQ(r9.get_numerator(), -3);
+	EXPECT_EQ(r9.get_denominator(), 2);
+
+	RationalNum r10(-3, -2);
+	EXPECT_EQ(r10.get_numerator(), 3);
+	EXPECT_EQ(r10.get_denominator(), 2);
 }
 
 TEST(RationalNumTest, Equality) {
@@ -133,4 +139,101 @@ TEST(RationalNumTest, Addition) {
 
 	RationalNum r12_1(1, 6), r12_2(-1, 3);
 	EXPECT_EQ(r12_1 + r12_2, RationalNum(-1, 6));
+
+	RationalNum r13_1(0, 1), r13_2(1, 3);
+	EXPECT_EQ(r13_1 + r13_2, r13_2);
+	EXPECT_EQ(r13_2 + r13_1, r13_2);
+
+	RationalNum r14_1(0, 1), r14_2(-1, 3);
+	EXPECT_EQ(r14_1 + r14_2, r14_2);
+	EXPECT_EQ(r14_2 + r14_1, r14_2);
+}
+
+TEST(RationalNumTest, Subraction) {
+	RationalNum r1_1(1, 2), r1_2(1, 2);
+	EXPECT_EQ(r1_1 - r1_2, RationalNum(0, 1));
+
+	RationalNum r2_1(1, 2), r2_2(-1, 2);
+	EXPECT_EQ(r2_1 - r2_2, RationalNum(1, 1));
+
+	RationalNum r3_1(-1, 2), r3_2(-1, 2);
+	EXPECT_EQ(r3_1 - r3_2, RationalNum(0, 1));
+
+	RationalNum r4_1(1, 3), r4_2(1, 4);
+	EXPECT_EQ(r4_1 - r4_2, RationalNum(1, 12));
+
+	RationalNum r5_1(1, 3), r5_2(-1, 4);
+	EXPECT_EQ(r5_1 - r5_2, RationalNum(7, 12));
+
+	RationalNum r6_1(-1, 3), r6_2(1, 4);
+	EXPECT_EQ(r6_1 - r6_2, RationalNum(-7, 12));
+
+	RationalNum r7_1(-1, 3), r7_2(-1, 4);
+	EXPECT_EQ(r7_1 - r7_2, RationalNum(-1, 12));
+
+	RationalNum r8_1(1, 4), r8_2(1, 6);
+	EXPECT_EQ(r8_1 - r8_2, RationalNum(1, 12));
+
+	RationalNum r9_1(1, 6), r9_2(1, 3);
+	EXPECT_EQ(r9_1 - r9_2, RationalNum(-1, 6));
+
+	RationalNum r10_1(-1, 6), r10_2(-1, 3);
+	EXPECT_EQ(r10_1 - r10_2, RationalNum(1, 6));
+
+	RationalNum r11_1(-1, 6), r11_2(1, 3);
+	EXPECT_EQ(r11_1 - r11_2, RationalNum(-1, 2));
+
+	RationalNum r12_1(1, 6), r12_2(-1, 3);
+	EXPECT_EQ(r12_1 - r12_2, RationalNum(1, 2));
+
+	RationalNum r13_1(0, 1), r13_2(1, 3);
+	EXPECT_EQ(r13_1 - r13_2, RationalNum(-1, 3));
+	EXPECT_EQ(r13_2 - r13_1, r13_2);
+
+	RationalNum r14_1(0, 1), r14_2(-1, 3);
+	EXPECT_EQ(r14_1 - r14_2, RationalNum(1, 3));
+	EXPECT_EQ(r14_2 - r14_1, r14_2);
+}
+
+TEST(RationalNumTest, Multiplication) {
+	RationalNum r1_1(1, 2), r1_2(1, 2);
+	EXPECT_EQ(r1_1 * r1_2, RationalNum(1, 4));
+
+	RationalNum r2_1(1, 2), r2_2(-1, 2);
+	EXPECT_EQ(r2_1 * r2_2, RationalNum(-1, 4));
+
+	RationalNum r3_1(-1, 2), r3_2(-1, 2);
+	EXPECT_EQ(r3_1 * r3_2, RationalNum(1, 4));
+
+	RationalNum r4_1(1, 3), r4_2(1, 4);
+	EXPECT_EQ(r4_1 * r4_2, RationalNum(1, 12));
+
+	RationalNum r5_1(1, 3), r5_2(-1, 4);
+	EXPECT_EQ(r5_1 * r5_2, RationalNum(-1, 12));
+
+	RationalNum r6_1(-1, 3), r6_2(1, 4);
+	EXPECT_EQ(r6_1 * r6_2, RationalNum(-1, 12));
+
+	RationalNum r7_1(-1, 3), r7_2(-1, 4);
+	EXPECT_EQ(r7_1 * r7_2, RationalNum(1, 12));
+
+	RationalNum r8_1(2, 3), r8_2(1, 2);
+	EXPECT_EQ(r8_1 * r8_2, RationalNum(1, 3));
+
+	RationalNum r9_1(2, 3), r9_2(-1, 2);
+	EXPECT_EQ(r9_1 * r9_2, RationalNum(-1, 3));
+
+	RationalNum r10_1(-2, 3), r10_2(1, 2);
+	EXPECT_EQ(r10_1 * r10_2, RationalNum(-1, 3));
+
+	RationalNum r11_1(-2, 3), r11_2(-1, 2);
+	EXPECT_EQ(r11_1 * r11_2, RationalNum(1, 3));
+
+	RationalNum r12_1(0, 1), r12_2(1, 3);
+	EXPECT_EQ(r12_1 * r12_2, RationalNum(0, 1));
+	EXPECT_EQ(r12_2 * r12_1, RationalNum(0, 1));
+
+	RationalNum r13_1(0, 1), r13_2(-1, 3);
+	EXPECT_EQ(r13_1 * r13_2, RationalNum(0, 1));
+	EXPECT_EQ(r13_2 * r13_1, RationalNum(0, 1));
 }

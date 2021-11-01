@@ -8,11 +8,15 @@ RationalNum::RationalNum() :
 }
 
 RationalNum::RationalNum(long long numerator, long long denominator) {
-	if (denominator < 1) {
-		throw "Denominator cannot be less than one!";
+	if (denominator == 0) {
+		throw "Denominator cannot be equal to zero!";
 	}
 	m_numerator = numerator;
 	m_denominator = denominator;
+	if (m_denominator < 0) {
+		m_numerator = -m_numerator;
+		m_denominator = -m_denominator;
+	}
 	simlify();
 }
 
@@ -57,9 +61,23 @@ bool operator!=(const RationalNum& left, const RationalNum& right) {
 	return !(left == right);
 }
 
-// Adding two fractions using formula: a/b + c/d = (a*d+b*c)/(b*d), and simlifying the result.
+// Addition of two fractions using formula: a/b + c/d = (ad + bc)/(bd), and simlifying the result.
 RationalNum operator+(const RationalNum& left, const RationalNum& right) {
 	RationalNum res(left.m_numerator * right.m_denominator + left.m_denominator * right.m_numerator, left.m_denominator* right.m_denominator);
+	res.simlify();
+	return res;
+}
+
+// Subtraction of  two fractions using formula: a/b - c/d = (ad - bc)/(bd), and simlifying the result.
+RationalNum operator-(const RationalNum& left, const RationalNum& right) {
+	RationalNum res(left.m_numerator * right.m_denominator - left.m_denominator * right.m_numerator, left.m_denominator * right.m_denominator);
+	res.simlify();
+	return res;
+}
+
+// Multiplication of  two fractions using formula: (a/b) * (c/d) = (ac)/(bd), and simlifying the result.
+RationalNum operator*(const RationalNum& left, const RationalNum& right) {
+	RationalNum res(left.m_numerator * right.m_numerator, left.m_denominator * right.m_denominator);
 	res.simlify();
 	return res;
 }

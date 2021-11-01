@@ -15,8 +15,9 @@ public:
 	friend bool operator==(const RationalNum& left, const RationalNum& right);
 	friend bool operator!=(const RationalNum& left, const RationalNum& right);
 	friend RationalNum operator+(const RationalNum& left, const RationalNum& right);
-	/*friend RationalNum operator-(const RationalNum& left, const RationalNum& right);
+	friend RationalNum operator-(const RationalNum& left, const RationalNum& right);
 	friend RationalNum operator*(const RationalNum& left, const RationalNum& right);
+	/*
 	friend RationalNum operator/(const RationalNum& left, const RationalNum& right);
 	friend std::ostream& operator<<(std::ostream& out, const RationalNum& num);*/
 };
