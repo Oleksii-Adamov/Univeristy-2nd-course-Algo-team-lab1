@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "../AlgoTeamLab1/RationalNum.h"
 #include "../AlgoTeamLab1/RationalNum.cpp"
+#include <fstream>
 
 TEST(RationalNumTest, ZeroArgumentConstructor) {
 	RationalNum a;
@@ -391,4 +392,118 @@ TEST(RationalNumTest, ToPow) {
 	EXPECT_ANY_THROW(r = r.to_pow(-2););
 
 
+}
+
+TEST(RationalNumTest, Ostream) {
+	std::ofstream out("Test.txt");
+	out << RationalNum(1, 3);
+	out << " " << RationalNum(-1, 3);
+	out << " " << RationalNum(1, 1);
+	out << " " << RationalNum(0, 1);
+	out.close();
+	std::ifstream in("Test.txt");
+	std::string s;
+
+	in >> s;
+	EXPECT_EQ(s, "1/3");
+
+	in >> s;
+	EXPECT_EQ(s, "-1/3");
+
+	in >> s;
+	EXPECT_EQ(s, "1/1");
+
+	in >> s;
+	EXPECT_EQ(s, "0/1");
+
+	in.close();
+}
+
+TEST(RationalNumTest, Istream) {
+	// valid data
+	std::ofstream out("Test.txt");
+	out << RationalNum(1, 3);
+	out << " " << RationalNum(-1, 3);
+	out << " " << RationalNum(1, 1);
+	out << " " << RationalNum(0, 1);
+	out << " " << RationalNum(11, 12);
+	out << " " << RationalNum(-11, 12);
+	out << " 2/6";
+	out << " " << " 32/33";
+	out.close();
+	std::ifstream in("Test.txt");
+	RationalNum r;
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), 1);
+	EXPECT_EQ(r.get_denominator(), 3);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), -1);
+	EXPECT_EQ(r.get_denominator(), 3);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), 1);
+	EXPECT_EQ(r.get_denominator(), 1);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), 0);
+	EXPECT_EQ(r.get_denominator(), 1);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), 11);
+	EXPECT_EQ(r.get_denominator(), 12);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), -11);
+	EXPECT_EQ(r.get_denominator(), 12);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), 1);
+	EXPECT_EQ(r.get_denominator(), 3);
+
+	in >> r;
+	EXPECT_EQ(r.get_numerator(), 32);
+	EXPECT_EQ(r.get_denominator(), 33);
+	
+	// end of file
+	EXPECT_ANY_THROW(in >> r);
+
+	in.close();
+
+	// invalid data
+	out.open("Test.txt");
+	out << " " << "123/asd";
+	out.close();
+	in.open("Test.txt");
+	EXPECT_ANY_THROW(in >> r);
+	in.close();
+
+	out.open("Test.txt");
+	out << " " << "asdaf/323";
+	out.close();
+	in.open("Test.txt");
+	EXPECT_ANY_THROW(in >> r);
+	in.close();
+
+	out.open("Test.txt");
+	out << " " << "/32";
+	out.close();
+	in.open("Test.txt");
+	EXPECT_ANY_THROW(in >> r);
+	in.close();
+
+	out.open("Test.txt");
+	out << " " << "23/";
+	out.close();
+	in.open("Test.txt");
+	EXPECT_ANY_THROW(in >> r);
+	in.close();
+
+	out.open("Test.txt");
+	out << " " << "sagrweqe";
+	out.close();
+	in.open("Test.txt");
+	EXPECT_ANY_THROW(in >> r);
+	in.close();
 }

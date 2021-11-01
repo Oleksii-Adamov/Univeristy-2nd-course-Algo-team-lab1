@@ -1,7 +1,7 @@
 #include "RationalNum.h"
 #include <numeric>
 #include <math.h>
-
+#include <string>
 RationalNum::RationalNum() :
 	m_numerator(0), m_denominator(1) 
 {
@@ -125,4 +125,33 @@ RationalNum RationalNum::to_pow(long long exponent) {
 	res.m_numerator = (long long) std::pow(res.m_numerator, exponent);
 	res.m_denominator = (long long)std::pow(res.m_denominator, exponent);
 	return res;
+}
+
+// "numerator/denominator"
+std::ostream& operator<<(std::ostream& out, const RationalNum& num) {
+	out << num.m_numerator << "/" << num.m_denominator;
+	return out;
+}
+
+// "numerator/denominator" non-decimal input handles std::stoll with his expecptions, I handle not full data
+std::istream& operator>>(std::istream& in, RationalNum& num) {
+	if (in.eof()) throw "RationalNum: Data in istream is not full!";
+	char c;
+	std::string numerator = "";
+	while (in.get(c)) {
+		if (c == '/') break;
+		numerator += c;
+	}
+	if (numerator == "") throw "RationalNum: in istream numerator is missing";
+	if (in.eof()) throw "RationalNum: Data in istream is not full!";
+	num.m_numerator = std::stoll(numerator);
+	std::string denominator = "";
+	while (in.get(c)) {
+		if (c == ' ' || c == '\n') break;
+		denominator += c;
+	}
+	if (denominator == "") throw "RationalNum: in istream denominator is missing";
+	num.m_denominator = std::stoll(denominator);
+	num.simlify();
+	return in;
 }

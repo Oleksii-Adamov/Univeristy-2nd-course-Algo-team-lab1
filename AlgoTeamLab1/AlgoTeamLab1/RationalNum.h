@@ -21,8 +21,7 @@ public:
 	RationalNum(const RationalNum& other);
 	RationalNum& operator=(const RationalNum& other);
 	RationalNum to_pow(long long exponent);
-	/*
-	long long to_pow(long long exponent);
-	friend std::ostream& operator<<(std::ostream& out, const RationalNum& num);*/
+	friend std::ostream& operator<<(std::ostream& out, const RationalNum& num);
+	friend std::istream& operator>>(std::istream& in, RationalNum& num);
 };
 
