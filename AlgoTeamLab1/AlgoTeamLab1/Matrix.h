@@ -203,7 +203,7 @@ public:
 		return !(left == right);
 	}
 
-	// Scalar multiplication O(n^2)
+	// Scalar multiplication O(n^2) b * A
 	friend Matrix<T> operator*(const T& left, const Matrix<T>& right) {
 		size_t number_of_rows = right.get_number_of_rows(), number_of_columns = right.get_number_of_columns();
 		Matrix result(number_of_rows, number_of_columns);
@@ -213,6 +213,10 @@ public:
 			}
 		}
 		return result;
+	}
+	// Scalar multiplication O(n^2) A * b
+	friend Matrix<T> operator*(const Matrix<T>& left, const T& right) {
+		return right * left;
 	}
 
 	friend std::ostream& operator<<(std::ostream& out, const Matrix<T>& a) {
@@ -241,5 +245,20 @@ public:
 	// Matrix multiplication using Strassen algorithm O(n^2.8)
 	friend Matrix<T> operator*(const Matrix<T>& left, const Matrix<T>& right) {
 		return multiply_Strassen_algo<T>(left, right);
+	}
+
+	Matrix<T>& operator+=(const Matrix<T>& other) {
+		*this = *this + other;
+		return *this;
+	}
+
+	Matrix<T>& operator-=(const Matrix<T>& other) {
+		*this = *this - other;
+		return *this;
+	}
+
+	Matrix<T>& operator*=(const Matrix<T>& other) {
+		*this = *this * other;
+		return *this;
 	}
 };

@@ -757,6 +757,14 @@ TEST(MatrixTest, AdditionAndSubtraction) {
 			EXPECT_EQ(d[i][j], RationalNum(-1, 3));
 		}
 	}
+	a += b;
+	EXPECT_EQ(a, c);
+	a -= b;
+
+	b -= a;
+	EXPECT_EQ(b, d);
+
+
 	EXPECT_ANY_THROW(c = a + Matrix<RationalNum>(2, 3));
 	EXPECT_ANY_THROW(c = a + Matrix<RationalNum>(3, 3));
 	EXPECT_ANY_THROW(c = a + Matrix<RationalNum>(2, 2));
@@ -786,6 +794,7 @@ TEST(MatrixTest, ScalarMultiplication) {
 			EXPECT_EQ(b[i][j], RationalNum(2, 9));
 		}
 	}
+	EXPECT_EQ(b, a * RationalNum(1, 3));
 	EXPECT_EQ(b, RationalNum(1,1) * b);
 }
 
@@ -861,6 +870,9 @@ TEST(MatrixMultiplicationStrassenAlgo, Square) {
 	EXPECT_EQ(c[2][1], RationalNum(9, 1));
 	EXPECT_EQ(c[2][2], RationalNum(-7, 1));
 
+	a *= b;
+	EXPECT_EQ(a, c);
+
 	// 0x0
 	Matrix<RationalNum> z1, z2, z3;
 	EXPECT_EQ(z3, z1 * z2);
@@ -896,9 +908,11 @@ TEST(MatrixMultiplicationStrassenAlgo, Square) {
 TEST(MatrixMultiplicationStrassenAlgo, WrongInput) {
 	Matrix<RationalNum> a(2, 2), b(3, 3);
 	EXPECT_ANY_THROW(a * b);
+	EXPECT_ANY_THROW(a *= b);
 	a = Matrix<RationalNum>(3, 3);
 	b = Matrix<RationalNum>(4, 3);
 	EXPECT_ANY_THROW(a * b);
+	EXPECT_ANY_THROW(a *= b);
 	
 }
 
@@ -925,6 +939,9 @@ TEST(MatrixMultiplicationStrassenAlgo, Rectangle) {
 	EXPECT_EQ(c[0][1], RationalNum(60, 1));
 	EXPECT_EQ(c[1][0], RationalNum(42, 1));
 	EXPECT_EQ(c[1][1], RationalNum(77, 1));
+
+	a *= b;
+	EXPECT_EQ(a, c);
 
 	a = Matrix<RationalNum>(1, 2);
 	a[0][0] = RationalNum(6, 1);
