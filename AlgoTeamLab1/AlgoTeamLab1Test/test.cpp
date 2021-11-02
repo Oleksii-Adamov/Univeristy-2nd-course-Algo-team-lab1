@@ -2,6 +2,8 @@
 #include "../AlgoTeamLab1/RationalNum.h"
 #include "../AlgoTeamLab1/RationalNum.cpp"
 #include <fstream>
+// clone
+#include "../AlgoTeamLab1/Matrix.h"
 
 TEST(RationalNumTest, ZeroArgumentConstructor) {
 	RationalNum a;
@@ -567,4 +569,35 @@ TEST(RationalNumTest, Ordering) {
 	EXPECT_TRUE(r2 >= r1);
 	EXPECT_FALSE(r2 < r1);
 	EXPECT_FALSE(r2 <= r1);
+}
+
+TEST(MatrixTest, Creation) {
+	Matrix<RationalNum> z;
+	EXPECT_EQ(z.get_number_of_rows(), 0);
+	EXPECT_EQ(z.get_number_of_columns(), 0);
+
+	Matrix<RationalNum> a(3, 2);
+	EXPECT_EQ(a.get_number_of_rows(), 3);
+	EXPECT_EQ(a.get_number_of_columns(), 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(0, 1));
+		}
+	}
+	a[0][0] = RationalNum(1, 3);
+	a[0][1] = RationalNum(2, 3);
+	a[1][0] = RationalNum(1, 1);
+	a[1][1] = RationalNum(2, 1);
+	a[2][0] = RationalNum(-1, 3);
+	a[2][1] = RationalNum(-2, 3);
+	EXPECT_EQ(a[0][0], RationalNum(1, 3));
+	EXPECT_EQ(a[0][1], RationalNum(2, 3));
+	EXPECT_EQ(a[1][0], RationalNum(1, 1));
+	EXPECT_EQ(a[1][1], RationalNum(2, 1));
+	EXPECT_EQ(a[2][0], RationalNum(-1, 3));
+	EXPECT_EQ(a[2][1], RationalNum(-2, 3));
+	EXPECT_ANY_THROW(a[3][0] = RationalNum(1, 1));
+	// unfortunatly not in my competance - c++ standart operator[] will allow it, and I don't want to write my own array
+	//EXPECT_ANY_THROW(RationalNum c = a[0][2]);
+	EXPECT_ANY_THROW(a[3][2] = RationalNum(2, 1));
 }
