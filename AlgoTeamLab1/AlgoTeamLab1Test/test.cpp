@@ -601,3 +601,35 @@ TEST(MatrixTest, Creation) {
 	//EXPECT_ANY_THROW(RationalNum c = a[0][2]);
 	EXPECT_ANY_THROW(a[3][2] = RationalNum(2, 1));
 }
+
+TEST(MatrixTest, Expanding) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] =  RationalNum(2, 3);
+		}
+	}
+	a.expand(5, 4);
+	EXPECT_EQ(a.get_number_of_rows(), 5);
+	EXPECT_EQ(a.get_number_of_columns(), 4);
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 4; j++) {
+			if (i < 3 && j < 2) {
+				EXPECT_EQ(a[i][j], RationalNum(2, 3));
+			}
+			else {
+				EXPECT_EQ(a[i][j], RationalNum(0, 1));
+			}
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 4; j++) {
+			a[i][j] = RationalNum(1, 3);
+		}
+	}
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 4; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(1, 3));
+		}
+	}
+}
