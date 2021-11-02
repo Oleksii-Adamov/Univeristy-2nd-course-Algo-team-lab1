@@ -23,7 +23,7 @@ public:
 	Matrix()
 		: m_number_of_rows(0), m_number_of_columns(0)
 	{
-
+		matrix = nullptr;
 	}
 	Matrix(long long number_of_rows, long long number_of_columns)
 		: m_number_of_rows(number_of_rows), m_number_of_columns(number_of_columns)

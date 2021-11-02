@@ -575,7 +575,7 @@ TEST(MatrixTest, Creation) {
 	Matrix<RationalNum> z;
 	EXPECT_EQ(z.get_number_of_rows(), 0);
 	EXPECT_EQ(z.get_number_of_columns(), 0);
-
+	EXPECT_ANY_THROW(z[0][0]);
 	Matrix<RationalNum> a(3, 2);
 	EXPECT_EQ(a.get_number_of_rows(), 3);
 	EXPECT_EQ(a.get_number_of_columns(), 2);
