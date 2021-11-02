@@ -11,8 +11,8 @@ public:
 	RationalNum();
 	void set(long long numerator, long long denominator);
 	RationalNum(long long numerator, long long denominator);
-	long long get_numerator();
-	long long get_denominator();
+	long long get_numerator() const;
+	long long get_denominator() const;
 	friend bool operator==(const RationalNum& left, const RationalNum& right);
 	friend bool operator!=(const RationalNum& left, const RationalNum& right);
 	friend RationalNum operator+(const RationalNum& left, const RationalNum& right);

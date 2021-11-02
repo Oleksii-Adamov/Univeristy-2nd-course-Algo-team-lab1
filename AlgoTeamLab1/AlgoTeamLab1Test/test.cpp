@@ -705,4 +705,44 @@ TEST(MatrixTest, MoveConstructor) {
 			EXPECT_EQ(a[i][j], RationalNum(0, 1));
 		}
 	}
+
+	/*std::string sa = "a", sb = "b";
+	std::string sc;
+	sc = sa + sb;*/
+}
+
+TEST(MatrixTest, ConstTest) {
+	const Matrix<RationalNum> a(3, 2);
+	RationalNum r = a[0][0];
+	EXPECT_EQ(r, RationalNum(0, 1));
+	EXPECT_EQ(a[0][0], RationalNum(0, 1));
+}
+
+TEST(MatrixTest, Addition) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+	Matrix<RationalNum> b(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			b[i][j] = RationalNum(1, 3);
+		}
+	}
+	Matrix<RationalNum> c = a + b;
+	EXPECT_EQ(c.get_number_of_rows(), 3);
+	EXPECT_EQ(c.get_number_of_columns(), 2);
+	EXPECT_EQ(b.get_number_of_rows(), 3);
+	EXPECT_EQ(b.get_number_of_columns(), 2);
+	EXPECT_EQ(a.get_number_of_rows(), 3);
+	EXPECT_EQ(a.get_number_of_columns(), 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(2, 3));
+			EXPECT_EQ(b[i][j], RationalNum(1, 3));
+			EXPECT_EQ(c[i][j], RationalNum(1, 1));
+		}
+	}
 }

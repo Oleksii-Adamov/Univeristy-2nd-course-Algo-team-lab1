@@ -26,11 +26,11 @@ RationalNum::RationalNum(long long numerator, long long denominator) {
 	set(numerator, denominator);
 }
 
-long long RationalNum::get_numerator() {
+long long RationalNum::get_numerator() const {
 	return m_numerator;
 }
 
-long long RationalNum::get_denominator() {
+long long RationalNum::get_denominator() const {
 	return m_denominator;
 }
 
