@@ -1,6 +1,6 @@
 #include "RationalNum.h"
 #include <numeric>
-#include <math.h>
+#include <cmath>
 #include <string>
 RationalNum::RationalNum() :
 	m_numerator(0), m_denominator(1) 

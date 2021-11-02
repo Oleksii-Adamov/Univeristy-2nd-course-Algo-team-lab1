@@ -600,6 +600,12 @@ TEST(MatrixTest, Creation) {
 	// unfortunatly not in my competance - c++ standart operator[] will allow it, and I don't want to write my own array
 	//EXPECT_ANY_THROW(RationalNum c = a[0][2]);
 	EXPECT_ANY_THROW(a[3][2] = RationalNum(2, 1));
+
+	EXPECT_ANY_THROW(Matrix<RationalNum>(0, 1));
+	EXPECT_ANY_THROW(Matrix<RationalNum>(1, 0));
+	Matrix<RationalNum> t(0, 0);
+	EXPECT_EQ(t.get_number_of_rows(), 0);
+	EXPECT_EQ(t.get_number_of_columns(), 0);
 }
 
 TEST(MatrixTest, Expanding) {
@@ -632,6 +638,15 @@ TEST(MatrixTest, Expanding) {
 			EXPECT_EQ(a[i][j], RationalNum(1, 3));
 		}
 	}
+
+	Matrix<RationalNum> t;
+	t.expand(0, 0);
+	EXPECT_EQ(t.get_number_of_rows(), 0);
+	EXPECT_EQ(t.get_number_of_columns(), 0);
+	EXPECT_ANY_THROW(t.expand(0, 1));
+	EXPECT_ANY_THROW(t.expand(1, 0));
+
+	EXPECT_ANY_THROW(a.expand(1, 2));
 }
 
 TEST(MatrixTest, CopyConstructor) {
@@ -772,4 +787,155 @@ TEST(MatrixTest, ScalarMultiplication) {
 		}
 	}
 	EXPECT_EQ(b, RationalNum(1,1) * b);
+}
+
+TEST(MatrixMultiplicationStrassenAlgo, Square) {
+	Matrix<RationalNum> a(3, 3);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+
+	Matrix<RationalNum> b(3, 3);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			b[i][j] = RationalNum(1, 3);
+		}
+	}
+
+	Matrix<RationalNum> c = a * b;
+	EXPECT_EQ(c.get_number_of_rows(), 3);
+	EXPECT_EQ(c.get_number_of_columns(), 3);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(2, 3));
+			EXPECT_EQ(b[i][j], RationalNum(1, 3));
+			EXPECT_EQ(c[i][j], RationalNum(2, 3));
+		}
+	}
+
+	Matrix<RationalNum> e(3, 3);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 3; j++) {
+			if (i == j)
+				e[i][j] = RationalNum(1, 1);
+		}
+	}
+	EXPECT_EQ(a, a * e);
+	EXPECT_EQ(a, e * a);
+	EXPECT_EQ(b, b * e);
+	EXPECT_EQ(b, e * b);
+	EXPECT_EQ(e, e * e);
+
+	a[0][0] = RationalNum(1, 1);
+	a[0][1] = RationalNum(-3, 1);
+	a[0][2] = RationalNum(2, 1);
+	a[1][0] = RationalNum(3, 1);
+	a[1][1] = RationalNum(-4, 1);
+	a[1][2] = RationalNum(1, 1);
+	a[2][0] = RationalNum(2, 1);
+	a[2][1] = RationalNum(-5, 1);
+	a[2][2] = RationalNum(3, 1);
+
+	b[0][0] = RationalNum(2, 1);
+	b[0][1] = RationalNum(5, 1);
+	b[0][2] = RationalNum(6, 1);
+	b[1][0] = RationalNum(1, 1);
+	b[1][1] = RationalNum(2, 1);
+	b[1][2] = RationalNum(5, 1);
+	b[2][0] = RationalNum(1, 1);
+	b[2][1] = RationalNum(3, 1);
+	b[2][2] = RationalNum(2, 1);
+	
+	c = a * b;
+	EXPECT_EQ(c.get_number_of_rows(), 3);
+	EXPECT_EQ(c.get_number_of_columns(), 3);
+	EXPECT_EQ(c[0][0], RationalNum(1, 1));
+	EXPECT_EQ(c[0][1], RationalNum(5, 1));
+	EXPECT_EQ(c[0][2], RationalNum(-5, 1));
+	EXPECT_EQ(c[1][0], RationalNum(3, 1));
+	EXPECT_EQ(c[1][1], RationalNum(10, 1));
+	EXPECT_EQ(c[1][2], RationalNum(0, 1));
+	EXPECT_EQ(c[2][0], RationalNum(2, 1));
+	EXPECT_EQ(c[2][1], RationalNum(9, 1));
+	EXPECT_EQ(c[2][2], RationalNum(-7, 1));
+
+	// 0x0
+	Matrix<RationalNum> z1, z2, z3;
+	EXPECT_EQ(z3, z1 * z2);
+
+	// 1x1
+	Matrix<RationalNum> o1(1,1), o2(1,1), o3;
+	o1[0][0] = RationalNum(1, 3);
+	o2[0][0] = RationalNum(2, 3);
+	o3 = o1 * o2;
+	EXPECT_EQ(o3.get_number_of_rows(), 1);
+	EXPECT_EQ(o3.get_number_of_columns(), 1);
+	EXPECT_EQ(o3[0][0], RationalNum(2, 9));
+
+	//2x2
+	Matrix<RationalNum> t1(2, 2), t2(2, 2), t3;
+	t1[0][0] = RationalNum(2, 1);
+	t1[0][1] = RationalNum(5, 1);
+	t1[1][0] = RationalNum(7, 1);
+	t1[1][1] = RationalNum(9, 1);
+	t2[0][0] = RationalNum(4, 1);
+	t2[0][1] = RationalNum(1, 1);
+	t2[1][0] = RationalNum(3, 1);
+	t2[1][1] = RationalNum(8, 1);
+	t3 = t1 * t2;
+	EXPECT_EQ(t3.get_number_of_rows(), 2);
+	EXPECT_EQ(t3.get_number_of_columns(), 2);
+	EXPECT_EQ(t3[0][0], RationalNum(23, 1));
+	EXPECT_EQ(t3[0][1], RationalNum(42, 1));
+	EXPECT_EQ(t3[1][0], RationalNum(55, 1));
+	EXPECT_EQ(t3[1][1], RationalNum(79, 1));
+}
+
+TEST(MatrixMultiplicationStrassenAlgo, WrongInput) {
+	Matrix<RationalNum> a(2, 2), b(3, 3);
+	EXPECT_ANY_THROW(a * b);
+	a = Matrix<RationalNum>(3, 3);
+	b = Matrix<RationalNum>(4, 3);
+	EXPECT_ANY_THROW(a * b);
+	
+}
+
+TEST(MatrixMultiplicationStrassenAlgo, Rectangle) {
+	Matrix<RationalNum> a(2, 3), b(3, 2), c;
+	a[0][0] = RationalNum(3, 1);
+	a[0][1] = RationalNum(4, 1);
+	a[0][2] = RationalNum(6, 1);
+	a[1][0] = RationalNum(2, 1);
+	a[1][1] = RationalNum(5, 1);
+	a[1][2] = RationalNum(9, 1);
+
+	b[0][0] = RationalNum(1, 1);
+	b[0][1] = RationalNum(4, 1);
+	b[1][0] = RationalNum(8, 1);
+	b[1][1] = RationalNum(3, 1);
+	b[2][0] = RationalNum(0, 1);
+	b[2][1] = RationalNum(6, 1);
+
+	c = a * b;
+	EXPECT_EQ(c.get_number_of_rows(), 2);
+	EXPECT_EQ(c.get_number_of_columns(), 2);
+	EXPECT_EQ(c[0][0], RationalNum(35, 1));
+	EXPECT_EQ(c[0][1], RationalNum(60, 1));
+	EXPECT_EQ(c[1][0], RationalNum(42, 1));
+	EXPECT_EQ(c[1][1], RationalNum(77, 1));
+
+	a = Matrix<RationalNum>(1, 2);
+	a[0][0] = RationalNum(6, 1);
+	a[0][1] = RationalNum(2, 1);
+
+	b = Matrix<RationalNum>(2, 1);
+	b[0][0] = RationalNum(9, 1);
+	b[1][0] = RationalNum(7, 1);
+
+	c = a * b;
+	EXPECT_EQ(c.get_number_of_rows(), 1);
+	EXPECT_EQ(c.get_number_of_columns(), 1);
+	EXPECT_EQ(c[0][0], RationalNum(68, 1));
 }
