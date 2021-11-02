@@ -117,7 +117,7 @@ public:
 	}
 
 	//move assignment operator
-	Matrix<T>& operator=(Matrix<T>&& other) {
+	Matrix<T>& operator=(Matrix<T>&& other) noexcept {
 		if (this != &other) {
 			deallocate();
 			m_number_of_rows = other.m_number_of_rows;
@@ -135,11 +135,56 @@ public:
 		if (!(left.get_number_of_rows() == right.get_number_of_rows() && left.get_number_of_columns() == right.get_number_of_columns())) {
 			throw "Matrix + : matricies must have equal dimensions";
 		}
-		long long number_of_rows = left.get_number_of_rows(), number_of_columns = left.get_number_of_columns();
+		size_t number_of_rows = left.get_number_of_rows(), number_of_columns = left.get_number_of_columns();
 		Matrix result(number_of_rows, number_of_columns);
 		for (size_t i = 0; i < number_of_rows; i++) {
 			for (size_t j = 0; j < number_of_columns; j++) {
 				result[i][j] = left[i][j] + right[i][j];
+			}
+		}
+		return result;
+	}
+
+	// Subtraction of two matrices O(n^2)
+	friend Matrix<T> operator-(const Matrix<T>& left, const Matrix<T>& right) {
+		if (!(left.get_number_of_rows() == right.get_number_of_rows() && left.get_number_of_columns() == right.get_number_of_columns())) {
+			throw "Matrix - : matricies must have equal dimensions";
+		}
+		size_t number_of_rows = left.get_number_of_rows(), number_of_columns = left.get_number_of_columns();
+		Matrix result(number_of_rows, number_of_columns);
+		for (size_t i = 0; i < number_of_rows; i++) {
+			for (size_t j = 0; j < number_of_columns; j++) {
+				result[i][j] = left[i][j] - right[i][j];
+			}
+		}
+		return result;
+	}
+
+	// Equality of matrices O(n^2)
+	friend bool operator==(const Matrix<T>& left, const Matrix<T>& right) {
+		if (!(left.get_number_of_rows() == right.get_number_of_rows() && left.get_number_of_columns() == right.get_number_of_columns())) {
+			return false;
+		}
+		size_t number_of_rows = left.get_number_of_rows(), number_of_columns = left.get_number_of_columns();
+		for (size_t i = 0; i < number_of_rows; i++) {
+			for (size_t j = 0; j < number_of_columns; j++) {
+				if (left[i][j] != right[i][j]) return false;
+			}
+		}
+		return true;
+	}
+
+	friend bool operator!=(const Matrix<T>& left, const Matrix<T>& right) {
+		return !(left == right);
+	}
+
+	// Scalar Multiplication O(n^2)
+	friend Matrix<T> operator*(const T& left, const Matrix<T>& right) {
+		size_t number_of_rows = right.get_number_of_rows(), number_of_columns = right.get_number_of_columns();
+		Matrix result(number_of_rows, number_of_columns);
+		for (size_t i = 0; i < number_of_rows; i++) {
+			for (size_t j = 0; j < number_of_columns; j++) {
+				result[i][j] = left * right[i][j];
 			}
 		}
 		return result;

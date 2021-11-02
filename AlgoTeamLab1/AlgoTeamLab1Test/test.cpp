@@ -694,8 +694,6 @@ TEST(MatrixTest, MoveAssignment) {
 		}
 	}
 }
-
-// needed operator+ to test
 TEST(MatrixTest, MoveConstructor) {
 	Matrix<RationalNum> a = Matrix<RationalNum>(3,2);
 	EXPECT_EQ(a.get_number_of_rows(), 3);
@@ -705,10 +703,6 @@ TEST(MatrixTest, MoveConstructor) {
 			EXPECT_EQ(a[i][j], RationalNum(0, 1));
 		}
 	}
-
-	/*std::string sa = "a", sb = "b";
-	std::string sc;
-	sc = sa + sb;*/
 }
 
 TEST(MatrixTest, ConstTest) {
@@ -718,7 +712,7 @@ TEST(MatrixTest, ConstTest) {
 	EXPECT_EQ(a[0][0], RationalNum(0, 1));
 }
 
-TEST(MatrixTest, Addition) {
+TEST(MatrixTest, AdditionAndSubtraction) {
 	Matrix<RationalNum> a(3, 2);
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 2; j++) {
@@ -731,9 +725,11 @@ TEST(MatrixTest, Addition) {
 			b[i][j] = RationalNum(1, 3);
 		}
 	}
-	Matrix<RationalNum> c = a + b;
+	Matrix<RationalNum> c = a + b, d = b - a;
 	EXPECT_EQ(c.get_number_of_rows(), 3);
 	EXPECT_EQ(c.get_number_of_columns(), 2);
+	EXPECT_EQ(d.get_number_of_rows(), 3);
+	EXPECT_EQ(d.get_number_of_columns(), 2);
 	EXPECT_EQ(b.get_number_of_rows(), 3);
 	EXPECT_EQ(b.get_number_of_columns(), 2);
 	EXPECT_EQ(a.get_number_of_rows(), 3);
@@ -743,6 +739,37 @@ TEST(MatrixTest, Addition) {
 			EXPECT_EQ(a[i][j], RationalNum(2, 3));
 			EXPECT_EQ(b[i][j], RationalNum(1, 3));
 			EXPECT_EQ(c[i][j], RationalNum(1, 1));
+			EXPECT_EQ(d[i][j], RationalNum(-1, 3));
 		}
 	}
+	EXPECT_ANY_THROW(c = a + Matrix<RationalNum>(2, 3));
+	EXPECT_ANY_THROW(c = a + Matrix<RationalNum>(3, 3));
+	EXPECT_ANY_THROW(c = a + Matrix<RationalNum>(2, 2));
+}
+
+TEST(MatrixTest, Equality) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+	EXPECT_TRUE(a ==  a + Matrix<RationalNum>(3, 2));
+}
+
+TEST(MatrixTest, ScalarMultiplication) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+	Matrix<RationalNum> b = RationalNum(1, 3) * a;
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(2, 3));
+			EXPECT_EQ(b[i][j], RationalNum(2, 9));
+		}
+	}
+	EXPECT_EQ(b, RationalNum(1,1) * b);
 }
