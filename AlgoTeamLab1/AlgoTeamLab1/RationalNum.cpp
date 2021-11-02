@@ -98,12 +98,14 @@ RationalNum operator/(const RationalNum& left, const RationalNum& right) {
 	return res;
 }
 
+// copy constructor - doesn't need simlify because other already did it
 RationalNum::RationalNum(const RationalNum& other)
 	: m_numerator(other.m_numerator), m_denominator(other.m_denominator) 
 {
 
 }
 
+// copy assignment operator - doesn't need simlify because other already did it
 RationalNum& RationalNum::operator=(const RationalNum& other) {
 	m_numerator = other.m_numerator;
 	m_denominator = other.m_denominator;

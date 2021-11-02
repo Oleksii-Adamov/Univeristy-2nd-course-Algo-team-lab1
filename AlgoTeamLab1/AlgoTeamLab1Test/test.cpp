@@ -633,3 +633,76 @@ TEST(MatrixTest, Expanding) {
 		}
 	}
 }
+
+TEST(MatrixTest, CopyConstructor) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+	Matrix<RationalNum> b = a;
+	EXPECT_EQ(b.get_number_of_rows(), 3);
+	EXPECT_EQ(b.get_number_of_columns(), 2);
+	EXPECT_EQ(a.get_number_of_rows(), 3);
+	EXPECT_EQ(a.get_number_of_columns(), 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(2, 3));
+			EXPECT_EQ(b[i][j], RationalNum(2, 3));
+		}
+	}
+}
+
+TEST(MatrixTest, CopyAssignment) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+	Matrix<RationalNum> b;
+	b = a;
+	EXPECT_EQ(b.get_number_of_rows(), 3);
+	EXPECT_EQ(b.get_number_of_columns(), 2);
+	EXPECT_EQ(a.get_number_of_rows(), 3);
+	EXPECT_EQ(a.get_number_of_columns(), 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(2, 3));
+			EXPECT_EQ(b[i][j], RationalNum(2, 3));
+		}
+	}
+}
+
+TEST(MatrixTest, MoveAssignment) {
+	Matrix<RationalNum> a(3, 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			a[i][j] = RationalNum(2, 3);
+		}
+	}
+	Matrix<RationalNum> b;
+	b = std::move(a);
+	EXPECT_EQ(a.get_number_of_rows(), 0);
+	EXPECT_EQ(a.get_number_of_columns(), 0);
+	EXPECT_EQ(b.get_number_of_rows(), 3);
+	EXPECT_EQ(b.get_number_of_columns(), 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(b[i][j], RationalNum(2, 3));
+		}
+	}
+}
+
+// needed operator+ to test
+TEST(MatrixTest, MoveConstructor) {
+	Matrix<RationalNum> a = Matrix<RationalNum>(3,2);
+	EXPECT_EQ(a.get_number_of_rows(), 3);
+	EXPECT_EQ(a.get_number_of_columns(), 2);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 2; j++) {
+			EXPECT_EQ(a[i][j], RationalNum(0, 1));
+		}
+	}
+}
