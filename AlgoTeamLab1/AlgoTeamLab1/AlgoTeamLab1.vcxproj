@@ -147,6 +147,10 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RationalNum.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="strassen_algo_input.txt" />
+    <Text Include="strassen_algo_output.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

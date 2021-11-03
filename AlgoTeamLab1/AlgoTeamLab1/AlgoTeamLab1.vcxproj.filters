@@ -33,4 +33,8 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="strassen_algo_input.txt" />
+    <Text Include="strassen_algo_output.txt" />
+  </ItemGroup>
 </Project>

@@ -2,7 +2,6 @@
 #include "../AlgoTeamLab1/RationalNum.h"
 #include "../AlgoTeamLab1/RationalNum.cpp"
 #include <fstream>
-// clone
 #include "../AlgoTeamLab1/Matrix.h"
 
 TEST(RationalNumTest, ZeroArgumentConstructor) {
