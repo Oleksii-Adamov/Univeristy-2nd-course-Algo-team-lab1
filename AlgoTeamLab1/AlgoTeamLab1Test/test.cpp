@@ -51,6 +51,18 @@ TEST(RationalNumTest, TwoArgumentConstructor) {
 	EXPECT_EQ(r10.get_denominator(), 2);
 }
 
+TEST(RationalNumTest, OneArgumentConstructor) {
+	RationalNum r(3);
+	EXPECT_EQ(r.get_numerator(), 3);
+	EXPECT_EQ(r.get_denominator(), 1);
+}
+
+TEST(RationalNumTest, ConversionFromInt) {
+	RationalNum r = 3;
+	EXPECT_EQ(r.get_numerator(), 3);
+	EXPECT_EQ(r.get_denominator(), 1);
+}
+
 TEST(RationalNumTest, Assignment) {
 	RationalNum r = RationalNum(5,7);
 	EXPECT_EQ(r.get_numerator(), 5);

@@ -4,6 +4,7 @@ class Matrix;
 
 #include "MatrixMultiplicationStrassenAlgorithm.h"
 
+// Matrix struct using T**
 template <typename T>
 class Matrix {
 private:

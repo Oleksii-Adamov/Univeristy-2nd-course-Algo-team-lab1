@@ -22,7 +22,8 @@ void RationalNum::set(long long numerator, long long denominator)
 	simlify();
 }
 
-RationalNum::RationalNum(long long numerator, long long denominator) {
+// can be used for imlicit convertion from long long
+RationalNum::RationalNum(long long numerator, long long denominator = 1) {
 	set(numerator, denominator);
 }
 
