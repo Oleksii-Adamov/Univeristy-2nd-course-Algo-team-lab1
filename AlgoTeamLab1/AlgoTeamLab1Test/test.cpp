@@ -914,6 +914,23 @@ TEST(MatrixMultiplicationStrassenAlgo, Square) {
 	EXPECT_EQ(t3[0][1], RationalNum(42, 1));
 	EXPECT_EQ(t3[1][0], RationalNum(55, 1));
 	EXPECT_EQ(t3[1][1], RationalNum(79, 1));
+
+	//6x6
+	a = Matrix<RationalNum>(6, 6);
+	e = Matrix<RationalNum>(6, 6);
+	for (size_t i = 0; i < 6; i++) {
+		for (int j = 0; j < 6; j++) {
+			a[i][j] = RationalNum(1, 3);
+			if (i == j) {
+				e[i][j] = 1;
+			}
+		}
+	}
+	c = a * e;
+	EXPECT_EQ(c.get_number_of_rows(), 6);
+	EXPECT_EQ(c.get_number_of_columns(), 6);
+	EXPECT_EQ(a, c);
+	EXPECT_EQ(e * a, a);
 }
 
 TEST(MatrixMultiplicationStrassenAlgo, WrongInput) {
