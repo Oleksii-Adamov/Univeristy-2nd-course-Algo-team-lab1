@@ -1,4 +1,5 @@
 #pragma once
+// Done by Oleksii Adamov
 #include "Matrix.h"
 #include <cmath>
 #include <algorithm>

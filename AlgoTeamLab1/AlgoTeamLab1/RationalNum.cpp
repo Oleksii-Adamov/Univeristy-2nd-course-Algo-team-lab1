@@ -1,3 +1,4 @@
+// Done by Oleksii Adamov
 #include "RationalNum.h"
 #include <numeric>
 #include <cmath>

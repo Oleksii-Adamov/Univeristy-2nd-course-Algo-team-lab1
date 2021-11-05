@@ -1,4 +1,5 @@
 #pragma once
+// Done by Oleksii Adamov
 template <typename T>
 class Matrix;
 
