@@ -21,7 +21,7 @@ int main() {
 		Matrix<RationalNum> c = a * b;
 		auto end = std::chrono::high_resolution_clock::now();
 		out << c;
-		out << "Multiplication is done for " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds\n";
+		out << "Multiplication has been done for " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 << " milliseconds\n";
 	}
 	catch (const char* e) {
 		std::cerr << e << std::endl;
