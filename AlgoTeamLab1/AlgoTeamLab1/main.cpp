@@ -1,5 +1,6 @@
-#include<fstream>
-#include<iostream>
+#include <fstream>
+#include <iostream>
+#include <chrono>
 #include "RationalNum.h"
 #include "Matrix.h"
 
@@ -16,8 +17,11 @@ int main() {
 		in >> b_number_of_rows >> b_number_of_columns;
 		Matrix<RationalNum> b(b_number_of_rows, b_number_of_columns);
 		in >> b;
+		auto start = std::chrono::high_resolution_clock::now();
 		Matrix<RationalNum> c = a * b;
+		auto end = std::chrono::high_resolution_clock::now();
 		out << c;
+		out << "Multiplication is done for " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() << " microseconds\n";
 	}
 	catch (const char* e) {
 		std::cerr << e << std::endl;
