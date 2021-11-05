@@ -5,12 +5,14 @@
 #include <stdexcept>
 
 //lower–upper (LU) decomposition factors a matrix as the product of a lower triangular matrix and 
-//an upper triangular matrix
+//an upper triangular matrix.
 
+//LU Decomposition is done using Doolittle's algorithm.
 //const & is used for the better performance
-//time complexity for LU-decomposition is 
+//time complexity for LU-decomposition is O((2/3)n^3)
 template<typename T>
 std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
+    //validate the matrix-parameter
     if (matrix == nullptr || (matrix.get_number_of_columns != matrix.get_number_of_rows)) { 
         throw std::invalid_argument("Invalid argument received as a parameter."); 
     }
