@@ -1,6 +1,7 @@
 #pragma once
 //Done by Vladyslav Shupliakov
 #include "Matrix.h"
+#include "RationalNum.h"
 #include <utility> 
 #include <stdexcept>
 
@@ -10,23 +11,28 @@
 //LU Decomposition is done using Doolittle's algorithm.
 //const & is used for the better performance
 //time complexity for LU-decomposition is O((2/3)n^3)
-template<typename T>
-std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
-    //validate the matrix-parameter
-    if (matrix == nullptr || (matrix.get_number_of_columns != matrix.get_number_of_rows)) { 
-        throw std::invalid_argument("Invalid argument received as a parameter."); 
-    }
-    size_t size = matrix.get_number_of_rows();
+std::pair<Matrix<RationalNum>, Matrix<RationalNum>> LU_decomposition(const Matrix<RationalNum>& matrix) {
+    size_t rows_num = matrix.get_number_of_rows();
+    size_t columns_num = matrix.get_number_of_columns();
 
-    Matrix<T> lower(size, size);
-    Matrix<T> upper(size, size);
+    //validate the parameters
+    if (rows_num != columns_num) {
+        throw std::invalid_argument("Invalid argument received as a parameter.");
+    }
+    if (rows_num == 0 || columns_num == 0) {
+        throw std::invalid_argument("Invalid argument received as a parameter.");
+    }
+    size_t size = rows_num;
+
+    Matrix<RationalNum> lower(size, size);
+    Matrix<RationalNum> upper(size, size);
 
     //Matrix decomposition into upper and
     //lower triangular matricies
+    RationalNum sum(0, 1);
     for (int i = 0; i < size; i++) {
         //upper
         for (int j = i; j < size; j++) {
-            int sum = 0;
             for (int k = 0; k < i; k++) {
                 sum += (lower[i][k] * upper[k][j]);
             }
@@ -35,10 +41,10 @@ std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
         //lower
         for (int j = i; j < size; j++) {
             if (i == j) {
-                lower[i][i] = 1;
+                lower[i][i] = RationalNum(1, 1);
             }
             else {
-                int sum = 0;
+                sum = RationalNum(0, 1);
                 for (int k = 0; k < i; k++) {
                     sum += (lower[j][k] * upper[k][i]);
                 }
@@ -46,5 +52,5 @@ std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
             }
         }
     }
-    return std::make_pair(upper, lower);
+    return std::make_pair(lower, upper);
 }
