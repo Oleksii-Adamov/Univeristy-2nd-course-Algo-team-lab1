@@ -5,17 +5,18 @@
 #include "InverseLUDecomposition.h"
 #include <vector>
 
-/*
-Лінійна регресія використовується для відновлення лінійного
-співвідношення між скалярною залежною величиною та вектором незалежних змінних
-В матричному вигляді Y = XB + C,
-де Y - вектор значень залежних змінних
-   Х - матриця значень незалежних змінних
-   B - вектор коефіцієнтів
-   С - вектор довільних похибок
-Мета - відновлення вектора В за заданими У та Х
-Використовується метод найменших квадратів:
-В = ((X'X)^-1)X'Y
+
+/ *
+Linear regression is used to restore the linear
+the relationship between the scalar dependent quantity and the vector of independent variables
+In matrix form Y = XB + C,
+where Y is the vector of values вЂ‹вЂ‹of dependent variables
+   X is a matrix of values вЂ‹вЂ‹of independent variables
+   B is the vector of coefficients
+   C is the vector of arbitrary errors
+The goal is to restore the vector B according to the given Y and X
+The least squares method is used:
+B = (X'X) ^ - 1) X'Y
 */
 vector<RationalNum> LinearRegression(vector<RationalNum> Y, Matrix<RationalNum> X)
 {
