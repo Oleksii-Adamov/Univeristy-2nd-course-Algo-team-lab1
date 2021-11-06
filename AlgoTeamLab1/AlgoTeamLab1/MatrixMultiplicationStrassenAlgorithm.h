@@ -9,7 +9,7 @@ size_t next_pow_of_two(size_t n) {
 	return (size_t) std::pow(2, exp);
 }
 
-// Strassen algorithm for square matricies that have dimensions equal to power of 2 (for performane using const &) O(n^2.8)
+// Strassen algorithm for square matricies that have dimensions equal to power of 2 (for performance using const &) O(n^2.8)
 template<typename T>
 Matrix<T> multiply_Strassen_algo_square_power_of_two(const Matrix<T>& left, const Matrix<T>& right) {
 	size_t size = left.get_number_of_rows();

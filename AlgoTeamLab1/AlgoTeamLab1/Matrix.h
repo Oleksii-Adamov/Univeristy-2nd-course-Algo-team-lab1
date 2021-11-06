@@ -6,6 +6,7 @@ class Matrix;
 #include "MatrixMultiplicationStrassenAlgorithm.h"
 
 // Matrix struct using T**
+// Not desirable to use primitive types in template, because they don't initialize properly
 template <typename T>
 class Matrix {
 private:
