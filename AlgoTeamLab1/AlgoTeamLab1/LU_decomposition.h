@@ -23,9 +23,9 @@ std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
 
     //Matrix decomposition into upper and
     //lower triangular matricies
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < size; i++) {
         //upper
-        for (int j = i; j < n; j++) {
+        for (int j = i; j < size; j++) {
             int sum = 0;
             for (int k = 0; k < i; k++) {
                 sum += (lower[i][k] * upper[k][j]);
@@ -33,7 +33,7 @@ std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
             upper[i][j] = matrix[i][j] - sum;
         }
         //lower
-        for (int j = i; j < n; j++) {
+        for (int j = i; j < size; j++) {
             if (i == j) {
                 lower[i][i] = 1;
             }
