@@ -16,7 +16,8 @@ where Y is the vector of values ​​of dependent variables
    C is the vector of arbitrary errors
 The goal is to restore the vector B according to the given Y and X
 The least squares method is used:
-B = (X'X) ^ - 1) X'Y
+      T   -1   T
+B = (X x X) x X  x Y
 */
 vector<RationalNum> LinearRegression(vector<RationalNum> Y, Matrix<RationalNum> X)
 {
