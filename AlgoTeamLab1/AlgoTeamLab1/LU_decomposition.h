@@ -21,9 +21,6 @@ std::pair<Matrix<T>, Matrix<T>> LU_decomposition(const Matrix<T>& matrix) {
     Matrix<T> lower(size, size);
     Matrix<T> upper(size, size);
 
-    memset(lower, 0, sizeof(lower));
-    memset(upper, 0, sizeof(upper));
-
     //Matrix decomposition into upper and
     //lower triangular matricies
     for (int i = 0; i < n; i++) {
