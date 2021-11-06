@@ -95,6 +95,7 @@ Matrix<T> multiply_Strassen_algo_square_power_of_two(const Matrix<T>& left, cons
 // Matrix multiplication using Strassen algorithm O(n^2.8)
 // checking non-square matricies and matricies that have demensions not equal to power of 2 (using copies to modify if necessary,
 // it won't radicly affect performance, because this function will be called once)
+// Do not use primitive types in template, because they don't initialize properly. If you want to, then get it already square and with power of two dimensions
 template<typename T>
 Matrix<T> multiply_Strassen_algo(Matrix<T> left, Matrix<T> right) {
 	// check if possible
