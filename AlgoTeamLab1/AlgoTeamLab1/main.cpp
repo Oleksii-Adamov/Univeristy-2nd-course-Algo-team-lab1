@@ -4,7 +4,7 @@
 #include <utility> 
 #include "RationalNum.h"
 #include "Matrix.h"
-#include "LU_decomposition.h"
+#include "InverseLUDecomposition.h"
 
 int main() {
 	// strassen algo input ouput, as I remember need to add time measurment
@@ -41,14 +41,16 @@ int main() {
 		lu_decomposition_in >> input_matrix;
 
 		auto start = std::chrono::high_resolution_clock::now();
-		std::pair<Matrix<RationalNum>, Matrix<RationalNum>> decomposed = LU_decomposition(input_matrix);
+		Matrix<RationalNum> inverse_matrix_lu_result = inverse_matrix_lu_decomposition(input_matrix);
 		auto end = std::chrono::high_resolution_clock::now();
 
-		lu_decomposition_out << "Lower decomposed: \n";
-		lu_decomposition_out << decomposed.first;
-		lu_decomposition_out << "Upper decomposed: \n";
-		lu_decomposition_out << decomposed.second;
-		lu_decomposition_out << "Benchmark for LU decomposition: " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 
+		std::pair<Matrix<RationalNum>, Matrix<RationalNum>> decomposed = LU_decomposition(input_matrix);
+
+		lu_decomposition_out << "Lower decomposed: \n" << decomposed.first << '\n';
+		lu_decomposition_out << "Upper decomposed: \n" << decomposed.second << '\n';
+		lu_decomposition_out << "Inverse matrix: \n" << inverse_matrix_lu_result << '\n';
+		lu_decomposition_out << "Benchmark for inversing matrix using LU-decomposition: " 
+			                 << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 
 			                 << " milliseconds\n";
 	}
 	catch (const char* e) {

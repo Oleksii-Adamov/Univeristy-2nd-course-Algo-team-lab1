@@ -4,7 +4,7 @@
 #include <fstream>
 #include <utility> 
 #include "../AlgoTeamLab1/Matrix.h"
-#include "../AlgoTeamLab1/LU_decomposition.h"
+#include "../AlgoTeamLab1/InverseLUDecomposition.h"
 
 TEST(RationalNumTest, ZeroArgumentConstructor) {
 	RationalNum a;
@@ -987,7 +987,7 @@ TEST(MatrixMultiplicationStrassenAlgo, Rectangle) {
 	EXPECT_EQ(c[0][0], RationalNum(68, 1));
 }
 
-TEST(LUDecompositionAlgo, Square) {
+TEST(InverseUsingLUDecomposition, Square) {
 	Matrix<RationalNum> testing_matrix(3, 3);
 	EXPECT_EQ(testing_matrix.get_number_of_rows(), 3);
 	EXPECT_EQ(testing_matrix.get_number_of_columns(), 3);
@@ -1002,9 +1002,9 @@ TEST(LUDecompositionAlgo, Square) {
 	testing_matrix[2][1] = RationalNum(1, 3);
 	testing_matrix[2][2] = RationalNum(3, 5);
 
-	std::pair<Matrix<RationalNum>, Matrix<RationalNum>> result = LU_decomposition(testing_matrix);
-	Matrix<RationalNum> lower_decomposed = result.first;
-	Matrix<RationalNum> upper_decomposed = result.second;
+	std::pair<Matrix<RationalNum>, Matrix<RationalNum>> decomposed_result = LU_decomposition(testing_matrix);
+	Matrix<RationalNum> lower_decomposed = decomposed_result.first;
+	Matrix<RationalNum> upper_decomposed = decomposed_result.second;
 
 	EXPECT_EQ(lower_decomposed.get_number_of_rows(), 3);
 	EXPECT_EQ(lower_decomposed.get_number_of_columns(), 3);
@@ -1029,23 +1029,33 @@ TEST(LUDecompositionAlgo, Square) {
 	EXPECT_EQ(upper_decomposed[2][0], RationalNum(0, 1));
 	EXPECT_EQ(upper_decomposed[2][1], RationalNum(0, 1));
 	EXPECT_EQ(upper_decomposed[2][2], RationalNum(-61, 90));
+
+	Matrix<RationalNum> inverse_result = inverse_matrix_lu_decomposition(testing_matrix);
+	EXPECT_EQ(inverse_result.get_number_of_rows(), 3);
+	EXPECT_EQ(inverse_result.get_number_of_columns(), 3);
+	EXPECT_EQ(inverse_result[0][0], RationalNum(-142, 61));
+	EXPECT_EQ(inverse_result[0][1], RationalNum(62, 61));
+	EXPECT_EQ(inverse_result[0][2], RationalNum(180, 61));
+	EXPECT_EQ(inverse_result[1][0], RationalNum(27, 61));
+	EXPECT_EQ(inverse_result[1][1], RationalNum(81, 61));
+	EXPECT_EQ(inverse_result[1][2], RationalNum(-60, 61));
+	EXPECT_EQ(inverse_result[2][0], RationalNum(325, 122));
+	EXPECT_EQ(inverse_result[2][1], RationalNum(-245, 122));
+	EXPECT_EQ(inverse_result[2][2], RationalNum(-90, 61));
 }
 
-TEST(LUDecompositionAlgo, InvalidParameter) {
+TEST(InverseUsingLUDecomposition, InvalidParameters) {
 	Matrix<RationalNum> testing_matrix_rectangle(3, 4);
-	std::pair<Matrix<RationalNum>, Matrix<RationalNum>> decomposition_result;
+	Matrix<RationalNum> inverse_matrix_result;
 
 	EXPECT_EQ(testing_matrix_rectangle.get_number_of_rows(), 3);
 	EXPECT_EQ(testing_matrix_rectangle.get_number_of_columns(), 4);
-	EXPECT_ANY_THROW(
-		decomposition_result = LU_decomposition(testing_matrix_rectangle)
-	);
+	EXPECT_ANY_THROW(inverse_matrix_result = inverse_matrix_lu_decomposition(testing_matrix_rectangle));
+
 
 	Matrix<RationalNum> testing_matrix_zero_rows_and_columns(0, 0);
 
 	EXPECT_EQ(testing_matrix_zero_rows_and_columns.get_number_of_rows(), 0);
 	EXPECT_EQ(testing_matrix_zero_rows_and_columns.get_number_of_columns(), 0);
-	EXPECT_ANY_THROW(
-		decomposition_result = LU_decomposition(testing_matrix_zero_rows_and_columns)
-	);
+	EXPECT_ANY_THROW(inverse_matrix_result = inverse_matrix_lu_decomposition(testing_matrix_zero_rows_and_columns));
 }
