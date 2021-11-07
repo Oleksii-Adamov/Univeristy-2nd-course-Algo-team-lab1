@@ -1,10 +1,11 @@
 #include <fstream>
 #include <iostream>
 #include <chrono>
-#include <utility> 
+#include <utility>
 #include "RationalNum.h"
 #include "Matrix.h"
 #include "InverseLUDecomposition.h"
+#include "LinearRegression.h"
 
 int main() {
 	// strassen algo input ouput, as I remember need to add time measurment
@@ -49,12 +50,39 @@ int main() {
 		lu_decomposition_out << "Lower decomposed: \n" << decomposed.first << '\n';
 		lu_decomposition_out << "Upper decomposed: \n" << decomposed.second << '\n';
 		lu_decomposition_out << "Inverse matrix: \n" << inverse_matrix_lu_result << '\n';
-		lu_decomposition_out << "Benchmark for inversing matrix using LU-decomposition: " 
-			                 << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 
+		lu_decomposition_out << "Benchmark for inversing matrix using LU-decomposition: "
+			                 << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001
 			                 << " milliseconds\n";
 	}
 	catch (const char* e) {
 		std::cerr << e << std::endl;
 		lu_decomposition_out << e << "\n";
 	}
+
+	//LinearRegression input/otput
+	std::ifstream regression_input_Y("linear_regression_input_Y.txt");
+    std::ifstream regression_input_X("linear_regression_input_X.txt");
+	std::ofstream regression_out("linear_regression_output.txt");
+    try
+    {
+        size_t linear_number_rows, linear_number_colums;
+        regression_input_X >> linear_number_rows >> linear_number_colums;
+        Matrix<RationalNum> Y(linear_number_rows, 1);
+        Matrix<RationalNum> X(linear_number_rows, linear_number_colums);
+        Matrix<RationalNum> B(linear_number_rows, 1);
+        regression_input_Y >> Y;
+        regression_input_X >> X;
+
+        auto start = std::chrono::high_resolution_clock::now();
+        B = LinearRegression(Y, X);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        regression_out << B;
+        regression_out << "Multiplication has been done for" << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 << " milliseconds\n";
+    }
+    catch (const char* e)
+    {
+        std::cerr << e << std::endl;
+        regression_out << e << std::endl;
+    }
 }

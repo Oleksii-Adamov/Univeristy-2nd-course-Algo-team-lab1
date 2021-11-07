@@ -20,17 +20,17 @@ The least squares method is used:
       T   -1   T
 B = (X x X) x X  x Y
 */
-Matrix<RationalNum> LinearRegression(Matrix<RationalNum> Y, Matrix<RationalNum> X)
+Matrix<RationalNum> LinearRegression(Matrix<RationalNum>& Y,Matrix<RationalNum>& X)
 {
     //check sizes
-    if(Y.size() != X.get_number_of_rows || Y.get_number_of_columns != 1)
+    if(Y.get_number_of_rows() != X.get_number_of_rows())
     {
         throw "Y and/or X have different size!";
     }
-    Matrix<RationalNum> B(X.get_number_of_rows(), 1);
-    B = inverse_matrix_lu_decomposition(X.transpose()*X)*X.transpose()*Y;
+    Matrix<RationalNum> B(X.get_number_of_rows(), X.get_number_of_columns());
+    B = X.transpose() * X;
+    B = inverse_matrix_lu_decomposition(B);
+    B = B * X.transpose();
+    B = B * Y;
     return B;
 }
-
-
-
