@@ -104,7 +104,7 @@ Matrix<T> multiply_Strassen_algo(Matrix<T> left, Matrix<T> right) {
 	size_t ret_number_of_rows = left.get_number_of_rows(), ret_number_of_columns = right.get_number_of_columns();
 	Matrix<T> ret(ret_number_of_rows, ret_number_of_columns);
 	// if not square
-	if (left.get_number_of_rows() != left.get_number_of_columns()) {
+	if (left.get_number_of_rows() != left.get_number_of_columns() || right.get_number_of_rows() != right.get_number_of_columns()) {
 		size_t new_size = std::max(std::max(left.get_number_of_rows(), left.get_number_of_columns()), right.get_number_of_columns());
 		left.expand(new_size, new_size);
 		right.expand(new_size, new_size);
