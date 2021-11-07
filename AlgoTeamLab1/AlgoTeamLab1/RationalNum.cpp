@@ -145,15 +145,18 @@ std::ostream& operator<<(std::ostream& out, const RationalNum& num) {
 // "numerator/denominator" non-decimal input handles std::stoll with his expecptions, I handle not full data
 std::istream& operator>>(std::istream& in, RationalNum& num) {
 	if (in.eof()) throw "RationalNum: Data in istream is not full!";
+	int sign = 1;
 	char c;
 	std::string numerator = "";
 	while (in.get(c)) {
+		if (c == '\n' || c == ' ') continue;
 		if (c == '/') break;
-		numerator += c;
+		if (sign == 1 && c == '-') sign = -1;
+		else numerator += c;
 	}
 	if (numerator == "") throw "RationalNum: in istream numerator is missing";
 	if (in.eof()) throw "RationalNum: Data in istream is not full!";
-	num.m_numerator = std::stoll(numerator);
+	num.m_numerator = std::stoll(numerator) * sign;
 	std::string denominator = "";
 	while (in.get(c)) {
 		if (c == ' ' || c == '\n') break;

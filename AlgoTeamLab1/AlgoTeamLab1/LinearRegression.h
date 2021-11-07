@@ -32,10 +32,22 @@ Matrix<RationalNum> LinearRegression(Matrix<RationalNum>& Y,Matrix<RationalNum>&
     {
         throw "Y and/or X have different size!";
     }
-    Matrix<RationalNum> B(X.get_number_of_rows(), X.get_number_of_columns());
-    B = X.transpose() * X;
+    //make matrix that starts by [1, ... 1] colum
+    Matrix<RationalNum> X_plus(X.get_number_of_rows(), X.get_number_of_columns() + 1);
+    for (int i = 0; i < X.get_number_of_rows(); i++)
+    {
+        X_plus[i][0] = RationalNum(1, 1);
+    }
+
+    for (int i = 0; i < X_plus.get_number_of_rows(); i++)
+        for (int j = 0; j < X.get_number_of_columns(); j++)
+            X_plus[i][j + 1] = X[i][j];
+
+
+    Matrix<RationalNum> B(X_plus.get_number_of_rows(), X_plus.get_number_of_columns());
+    B = X_plus.transpose() * X_plus;
     B = inverse_matrix_lu_decomposition(B);
-    B = B * X.transpose();
+    B = B * X_plus.transpose();
     B = B * Y;
     return B;
 }
