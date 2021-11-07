@@ -6,16 +6,19 @@
 #include <vector>
 
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9dd30026c5c5f1626f8fc3a5d794c0f90cb74d64
 /*
 Linear regression is used to restore the linear
 the relationship between the scalar dependent quantity and the vector of independent variables
 In matrix form Y = XB + C,
-where Y is the vector of values ​​of dependent variables
-   X is a matrix of values ​​of independent variables
-   B is the vector of coefficients
-   C is the vector of arbitrary errors
+where Y is the vector of dependent variables
+      X is a matrix of independent variables
+      B is the vector of coefficients
+      C is the vector of arbitrary errors
 The goal is to restore the vector B according to the given Y and X
 The least squares method is used:
       T   -1   T
