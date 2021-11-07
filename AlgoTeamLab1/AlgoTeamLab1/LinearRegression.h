@@ -5,12 +5,6 @@
 #include "InverseLUDecomposition.h"
 #include <vector>
 
-
-
-<<<<<<< HEAD
-
-=======
->>>>>>> 1d8e8be239fa06e32e4adf4d3b9aaf11ade2da57
 /*
 Linear regression is used to restore the linear
 the relationship between the scalar dependent quantity and the vector of independent variables
@@ -31,22 +25,6 @@ The least squares method is used:
       T   -1   T
 B = (X x X) x X  x Y
 */
-<<<<<<< HEAD
-Matrix<RationalNum> LinearRegression(Matrix<RationalNum> Y, Matrix<RationalNum> X)
-{
-    //check sizes
-    if(Y.size() != X.get_number_of_rows || Y.get_number_of_columns != 1)
-    {
-        throw "Y and/or X have different size!";
-    }
-    Matrix<RationalNum> B(X.get_number_of_rows(), 1);
-    B = inverse_matrix_lu_decomposition(X.transpose()*X)*X.transpose()*Y;
-    return B;
-}
-
-
-
-=======
 Matrix<RationalNum> LinearRegression(Matrix<RationalNum>& Y,Matrix<RationalNum>& X)
 {
     //check sizes
@@ -61,4 +39,3 @@ Matrix<RationalNum> LinearRegression(Matrix<RationalNum>& Y,Matrix<RationalNum>&
     B = B * Y;
     return B;
 }
->>>>>>> 1d8e8be239fa06e32e4adf4d3b9aaf11ade2da57

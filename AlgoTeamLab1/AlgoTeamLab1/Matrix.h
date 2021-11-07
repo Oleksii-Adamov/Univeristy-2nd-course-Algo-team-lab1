@@ -270,7 +270,7 @@ public:
 
         for(int i = 0; i < m_number_of_rows; i++)
             for(int j = 0; j < m_number_of_columns; j++)
-                transpose_matrix[j][i] = this[i][j];
+                transpose_matrix[j][i] = matrix[i][j];
 
         return transpose_matrix;
 	}
