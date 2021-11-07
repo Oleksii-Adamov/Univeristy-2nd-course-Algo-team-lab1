@@ -1,4 +1,4 @@
-52/27 157/297 263/561
-1376/315 937/693 6373/6545
-124/21 797/462 3603/2618
-Multiplication has been done for 0.176 milliseconds
+7/30 8/45 -4/9
+19/40 17/30 -11/12
+2/5 26/45 -7/9
+Multiplication has been done for 0.188 milliseconds
