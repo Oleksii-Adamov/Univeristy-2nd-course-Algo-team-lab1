@@ -9,7 +9,7 @@ size_t next_pow_of_two(size_t n) {
 	return (size_t) std::pow(2, exp);
 }
 
-// Strassen algorithm for square matricies that have dimensions equal to power of 2 (for performane using const &) O(n^2.8)
+// Strassen algorithm for square matricies that have dimensions equal to power of 2 (for performance using const &) O(n^2.8)
 template<typename T>
 Matrix<T> multiply_Strassen_algo_square_power_of_two(const Matrix<T>& left, const Matrix<T>& right) {
 	size_t size = left.get_number_of_rows();
@@ -95,6 +95,7 @@ Matrix<T> multiply_Strassen_algo_square_power_of_two(const Matrix<T>& left, cons
 // Matrix multiplication using Strassen algorithm O(n^2.8)
 // checking non-square matricies and matricies that have demensions not equal to power of 2 (using copies to modify if necessary,
 // it won't radicly affect performance, because this function will be called once)
+// Do not use primitive types in template, because they don't initialize properly. If you want to, then get it already square and with power of two dimensions
 template<typename T>
 Matrix<T> multiply_Strassen_algo(Matrix<T> left, Matrix<T> right) {
 	// check if possible
@@ -103,7 +104,7 @@ Matrix<T> multiply_Strassen_algo(Matrix<T> left, Matrix<T> right) {
 	size_t ret_number_of_rows = left.get_number_of_rows(), ret_number_of_columns = right.get_number_of_columns();
 	Matrix<T> ret(ret_number_of_rows, ret_number_of_columns);
 	// if not square
-	if (left.get_number_of_rows() != left.get_number_of_columns()) {
+	if (left.get_number_of_rows() != left.get_number_of_columns() || right.get_number_of_rows() != right.get_number_of_columns()) {
 		size_t new_size = std::max(std::max(left.get_number_of_rows(), left.get_number_of_columns()), right.get_number_of_columns());
 		left.expand(new_size, new_size);
 		right.expand(new_size, new_size);

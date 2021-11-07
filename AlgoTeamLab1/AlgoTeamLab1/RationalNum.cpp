@@ -156,7 +156,7 @@ std::istream& operator>>(std::istream& in, RationalNum& num) {
 	}
 	if (numerator == "") throw "RationalNum: in istream numerator is missing";
 	if (in.eof()) throw "RationalNum: Data in istream is not full!";
-	num.m_numerator = std::stoll(numerator) * sign;
+	num.m_numerator = (std::stoll(numerator)) * sign;
 	std::string denominator = "";
 	while (in.get(c)) {
 		if (c == ' ' || c == '\n') break;
