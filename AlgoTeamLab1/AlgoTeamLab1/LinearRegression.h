@@ -6,11 +6,7 @@
 #include <vector>
 
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 9dd30026c5c5f1626f8fc3a5d794c0f90cb74d64
 /*
 Linear regression is used to restore the linear
 the relationship between the scalar dependent quantity and the vector of independent variables
