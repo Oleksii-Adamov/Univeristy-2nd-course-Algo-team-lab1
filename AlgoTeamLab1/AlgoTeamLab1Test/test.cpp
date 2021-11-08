@@ -5,6 +5,7 @@
 #include <utility> 
 #include "../AlgoTeamLab1/Matrix.h"
 #include "../AlgoTeamLab1/InverseLUDecomposition.h"
+#include "../AlgoTeamLab1/LinearRegression.h"
 
 TEST(RationalNumTest, ZeroArgumentConstructor) {
 	RationalNum a;
@@ -1058,4 +1059,27 @@ TEST(InverseUsingLUDecomposition, InvalidParameters) {
 	EXPECT_EQ(testing_matrix_zero_rows_and_columns.get_number_of_rows(), 0);
 	EXPECT_EQ(testing_matrix_zero_rows_and_columns.get_number_of_columns(), 0);
 	EXPECT_ANY_THROW(inverse_matrix_result = inverse_matrix_lu_decomposition(testing_matrix_zero_rows_and_columns));
+}
+
+TEST(LinearRegression, InvalidInput){
+	Matrix<RationalNum> X(3, 2);
+	Matrix<RationalNum> Y(3, 1);
+	Y[0][0] = RationalNum(1, 2);
+	Y[1][0] = RationalNum(2, 1);
+	Y[2][0] = RationalNum(6, 4);
+	X[0][0] = RationalNum(1, 4);
+	X[1][0] = RationalNum(5, 4);
+	X[2][0] = RationalNum(2, 3);
+	X[0][1] = RationalNum(7, 4);
+	X[1][1] = RationalNum(6, 7);
+	X[2][1] = RationalNum(3, 4);
+	Matrix<RationalNum> B = LinearRegression(Y, X);
+	EXPECT_EQ(B.get_number_of_rows, X.get_number_of_rows);
+
+	Matrix<RationalNum> Y2(4, 1);
+	Y2[0][0] = RationalNum(2, 1);
+	Y2[1][0] = RationalNum(5, 4);
+	Y2[2][0] = RationalNum(2, 3);
+	Y2[3][0] = RationalNum(2, 4);
+	EXCEPT_ANY_TROW(LinearRegression(Y2, X);
 }
