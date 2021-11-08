@@ -13,4 +13,4 @@ Inverse matrix:
 27/61 81/61 -60/61
 325/122 -245/122 -90/61
 
-Benchmark for inversing matrix using LU-decomposition: 0.742 milliseconds
+Benchmark for inversing matrix using LU-decomposition: 0.073 milliseconds

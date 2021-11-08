@@ -3,4 +3,4 @@ b1: 9389/12307
 b2: -2977/12307
 b3: 1591/12307
 y = 3841/12307 + (9389/12307)x1 + (-2977/12307)x2 + (1591/12307)x3
-Multiplication has been done for26.063 milliseconds
+Multiplication has been done for3.386 milliseconds
