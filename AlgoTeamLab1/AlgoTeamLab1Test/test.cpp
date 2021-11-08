@@ -1061,7 +1061,7 @@ TEST(InverseUsingLUDecomposition, InvalidParameters) {
 	EXPECT_ANY_THROW(inverse_matrix_result = inverse_matrix_lu_decomposition(testing_matrix_zero_rows_and_columns));
 }
 
-TEST(LinearRegression, InvalidInput){
+TEST(LinearRegression, InvalidInput) {
 	Matrix<RationalNum> X(3, 2);
 	Matrix<RationalNum> Y(3, 1);
 	Y[0][0] = RationalNum(1, 2);
@@ -1074,18 +1074,18 @@ TEST(LinearRegression, InvalidInput){
 	X[1][1] = RationalNum(6, 7);
 	X[2][1] = RationalNum(3, 4);
 	Matrix<RationalNum> B = LinearRegression(Y, X);
-	EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_rows() + 1);
+	EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_columns() + 1);
 
 	Matrix<RationalNum> Y2(4, 1);
 	Y2[0][0] = RationalNum(2, 1);
 	Y2[1][0] = RationalNum(5, 4);
 	Y2[2][0] = RationalNum(2, 3);
 	Y2[3][0] = RationalNum(2, 4);
-	EXCEPT_ANY_TROW(LinearRegression(Y2, X));
+	EXPECT_ANY_THROW(LinearRegression(Y2, X));
 }
 
 TEST(LinearRegression, RightOut) {
-    Matrix<RationalNum> X(5, 3);
+	Matrix<RationalNum> X(5, 3);
 	Matrix<RationalNum> Y(5, 1);
 	X[0][0] = RationalNum(1, 1);
 	X[1][0] = RationalNum(2, 1);
@@ -1103,18 +1103,18 @@ TEST(LinearRegression, RightOut) {
 	X[3][2] = RationalNum(14, 2);
 	X[4][2] = RationalNum(8, 2);
 
-    Y[0][0] = RationalNum(1, 1);
+	Y[0][0] = RationalNum(1, 1);
 	Y[1][0] = RationalNum(4, 2);
-	Y[2][0] = RationalNum(12, 2);
+	Y[2][0] = RationalNum(12, 4);
 	Y[3][0] = RationalNum(5, 2);
 	Y[4][0] = RationalNum(1, 1);
 
-    Matrix<RationalNum> B = LinearRegression(Y, X);
+	Matrix<RationalNum> B = LinearRegression(Y, X);
 
-    EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_rows() + 1);
-    EXPECT_EQ(B[0][0].get_numerator(), 3841);
-    EXPECT_EQ(B[1][0].get_numerator(), 9389);
-    EXPECT_EQ(B[2][0].get_numerator(), -2977);
-    EXPECT_EQ(B[3][0].get_numerator(), 1591);
+	EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_columns() + 1);
+	EXPECT_EQ(B[0][0].get_numerator(), 3841);
+	EXPECT_EQ(B[1][0].get_numerator(), 9389);
+	EXPECT_EQ(B[2][0].get_numerator(), -2977);
+	EXPECT_EQ(B[3][0].get_numerator(), 1591);
 }
 
