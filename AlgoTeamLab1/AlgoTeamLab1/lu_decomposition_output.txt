@@ -1,0 +1,16 @@
+Lower decomposed: 
+1/1 0/1 0/1
+1/2 1/1 0/1
+9/8 -49/36 1/1
+
+Upper decomposed: 
+2/3 3/4 5/6
+0/1 3/8 -1/4
+0/1 0/1 -61/90
+
+Inverse matrix: 
+-142/61 62/61 180/61
+27/61 81/61 -60/61
+325/122 -245/122 -90/61
+
+Benchmark for inversing matrix using LU-decomposition: 0.742 milliseconds

@@ -139,6 +139,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="InverseLUDecomposition.h" />
+    <ClInclude Include="LinearRegression.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="MatrixMultiplicationStrassenAlgorithm.h" />
     <ClInclude Include="RationalNum.h" />
@@ -148,6 +150,11 @@
     <ClCompile Include="RationalNum.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="linear_regression_input_X.txt" />
+    <Text Include="linear_regression_input_Y.txt" />
+    <Text Include="linear_regression_output.txt" />
+    <Text Include="lu_decomposition_input.txt" />
+    <Text Include="lu_decomposition_output.txt" />
     <Text Include="strassen_algo_input.txt" />
     <Text Include="strassen_algo_output.txt" />
   </ItemGroup>

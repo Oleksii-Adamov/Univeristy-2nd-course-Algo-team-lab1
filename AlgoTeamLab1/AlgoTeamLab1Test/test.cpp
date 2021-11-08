@@ -2,7 +2,10 @@
 #include "../AlgoTeamLab1/RationalNum.h"
 #include "../AlgoTeamLab1/RationalNum.cpp"
 #include <fstream>
+#include <utility>
 #include "../AlgoTeamLab1/Matrix.h"
+#include "../AlgoTeamLab1/InverseLUDecomposition.h"
+#include "../AlgoTeamLab1/LinearRegression.h"
 
 TEST(RationalNumTest, ZeroArgumentConstructor) {
 	RationalNum a;
@@ -133,7 +136,7 @@ TEST(RationalNumTest, Addition) {
 
 	RationalNum r2_1(1, 2), r2_2(-1, 2);
 	EXPECT_EQ(r2_1 + r2_2, RationalNum(0, 1));
-	
+
 	// one test for +=
 	r2_1 += r2_2;
 	EXPECT_EQ(r2_1, RationalNum(0, 1));
@@ -310,7 +313,7 @@ TEST(RationalNumTest, Division) {
 
 	RationalNum r7_1(-1, 3), r7_2(-1, 4);
 	EXPECT_EQ(r7_1 / r7_2, RationalNum(4, 3));
-	
+
 	// (1/3) / (2/3) = 1/2
 	RationalNum r8_1(1, 3), r8_2(2, 3);
 	EXPECT_EQ(r8_1 / r8_2, RationalNum(1, 2));
@@ -494,7 +497,7 @@ TEST(RationalNumTest, Istream) {
 	in >> r;
 	EXPECT_EQ(r.get_numerator(), 32);
 	EXPECT_EQ(r.get_denominator(), 33);
-	
+
 	// end of file
 	EXPECT_ANY_THROW(in >> r);
 
@@ -867,7 +870,7 @@ TEST(MatrixMultiplicationStrassenAlgo, Square) {
 	b[2][0] = RationalNum(1, 1);
 	b[2][1] = RationalNum(3, 1);
 	b[2][2] = RationalNum(2, 1);
-	
+
 	c = a * b;
 	EXPECT_EQ(c.get_number_of_rows(), 3);
 	EXPECT_EQ(c.get_number_of_columns(), 3);
@@ -941,7 +944,7 @@ TEST(MatrixMultiplicationStrassenAlgo, WrongInput) {
 	b = Matrix<RationalNum>(4, 3);
 	EXPECT_ANY_THROW(a * b);
 	EXPECT_ANY_THROW(a *= b);
-	
+
 }
 
 TEST(MatrixMultiplicationStrassenAlgo, Rectangle) {
@@ -984,3 +987,134 @@ TEST(MatrixMultiplicationStrassenAlgo, Rectangle) {
 	EXPECT_EQ(c.get_number_of_columns(), 1);
 	EXPECT_EQ(c[0][0], RationalNum(68, 1));
 }
+
+TEST(InverseUsingLUDecomposition, Square) {
+	Matrix<RationalNum> testing_matrix(3, 3);
+	EXPECT_EQ(testing_matrix.get_number_of_rows(), 3);
+	EXPECT_EQ(testing_matrix.get_number_of_columns(), 3);
+
+	testing_matrix[0][0] = RationalNum(2, 3);
+	testing_matrix[0][1] = RationalNum(3, 4);
+	testing_matrix[0][2] = RationalNum(5, 6);
+	testing_matrix[1][0] = RationalNum(1, 3);
+	testing_matrix[1][1] = RationalNum(3, 4);
+	testing_matrix[1][2] = RationalNum(1, 6);
+	testing_matrix[2][0] = RationalNum(3, 4);
+	testing_matrix[2][1] = RationalNum(1, 3);
+	testing_matrix[2][2] = RationalNum(3, 5);
+
+	std::pair<Matrix<RationalNum>, Matrix<RationalNum>> decomposed_result = LU_decomposition(testing_matrix);
+	Matrix<RationalNum> lower_decomposed = decomposed_result.first;
+	Matrix<RationalNum> upper_decomposed = decomposed_result.second;
+
+	EXPECT_EQ(lower_decomposed.get_number_of_rows(), 3);
+	EXPECT_EQ(lower_decomposed.get_number_of_columns(), 3);
+	EXPECT_EQ(lower_decomposed[0][0], RationalNum(1, 1));
+	EXPECT_EQ(lower_decomposed[0][1], RationalNum(0, 1));
+	EXPECT_EQ(lower_decomposed[0][2], RationalNum(0, 1));
+	EXPECT_EQ(lower_decomposed[1][0], RationalNum(1, 2));
+	EXPECT_EQ(lower_decomposed[1][1], RationalNum(1, 1));
+	EXPECT_EQ(lower_decomposed[1][2], RationalNum(0, 1));
+	EXPECT_EQ(lower_decomposed[2][0], RationalNum(9, 8));
+	EXPECT_EQ(lower_decomposed[2][1], RationalNum(-49, 36));
+	EXPECT_EQ(lower_decomposed[2][2], RationalNum(1, 1));
+
+	EXPECT_EQ(upper_decomposed.get_number_of_rows(), 3);
+	EXPECT_EQ(upper_decomposed.get_number_of_columns(), 3);
+	EXPECT_EQ(upper_decomposed[0][0], RationalNum(2, 3));
+	EXPECT_EQ(upper_decomposed[0][1], RationalNum(3, 4));
+	EXPECT_EQ(upper_decomposed[0][2], RationalNum(5, 6));
+	EXPECT_EQ(upper_decomposed[1][0], RationalNum(0, 1));
+	EXPECT_EQ(upper_decomposed[1][1], RationalNum(3, 8));
+	EXPECT_EQ(upper_decomposed[1][2], RationalNum(-1, 4));
+	EXPECT_EQ(upper_decomposed[2][0], RationalNum(0, 1));
+	EXPECT_EQ(upper_decomposed[2][1], RationalNum(0, 1));
+	EXPECT_EQ(upper_decomposed[2][2], RationalNum(-61, 90));
+
+	Matrix<RationalNum> inverse_result = inverse_matrix_lu_decomposition(testing_matrix);
+	EXPECT_EQ(inverse_result.get_number_of_rows(), 3);
+	EXPECT_EQ(inverse_result.get_number_of_columns(), 3);
+	EXPECT_EQ(inverse_result[0][0], RationalNum(-142, 61));
+	EXPECT_EQ(inverse_result[0][1], RationalNum(62, 61));
+	EXPECT_EQ(inverse_result[0][2], RationalNum(180, 61));
+	EXPECT_EQ(inverse_result[1][0], RationalNum(27, 61));
+	EXPECT_EQ(inverse_result[1][1], RationalNum(81, 61));
+	EXPECT_EQ(inverse_result[1][2], RationalNum(-60, 61));
+	EXPECT_EQ(inverse_result[2][0], RationalNum(325, 122));
+	EXPECT_EQ(inverse_result[2][1], RationalNum(-245, 122));
+	EXPECT_EQ(inverse_result[2][2], RationalNum(-90, 61));
+}
+
+TEST(InverseUsingLUDecomposition, InvalidParameters) {
+	Matrix<RationalNum> testing_matrix_rectangle(3, 4);
+	Matrix<RationalNum> inverse_matrix_result;
+
+	EXPECT_EQ(testing_matrix_rectangle.get_number_of_rows(), 3);
+	EXPECT_EQ(testing_matrix_rectangle.get_number_of_columns(), 4);
+	EXPECT_ANY_THROW(inverse_matrix_result = inverse_matrix_lu_decomposition(testing_matrix_rectangle));
+
+
+	Matrix<RationalNum> testing_matrix_zero_rows_and_columns(0, 0);
+
+	EXPECT_EQ(testing_matrix_zero_rows_and_columns.get_number_of_rows(), 0);
+	EXPECT_EQ(testing_matrix_zero_rows_and_columns.get_number_of_columns(), 0);
+	EXPECT_ANY_THROW(inverse_matrix_result = inverse_matrix_lu_decomposition(testing_matrix_zero_rows_and_columns));
+}
+
+TEST(LinearRegression, InvalidInput) {
+	Matrix<RationalNum> X(3, 2);
+	Matrix<RationalNum> Y(3, 1);
+	Y[0][0] = RationalNum(1, 2);
+	Y[1][0] = RationalNum(2, 1);
+	Y[2][0] = RationalNum(6, 4);
+	X[0][0] = RationalNum(1, 4);
+	X[1][0] = RationalNum(5, 4);
+	X[2][0] = RationalNum(2, 3);
+	X[0][1] = RationalNum(7, 4);
+	X[1][1] = RationalNum(6, 7);
+	X[2][1] = RationalNum(3, 4);
+	Matrix<RationalNum> B = LinearRegression(Y, X);
+	EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_columns() + 1);
+
+	Matrix<RationalNum> Y2(4, 1);
+	Y2[0][0] = RationalNum(2, 1);
+	Y2[1][0] = RationalNum(5, 4);
+	Y2[2][0] = RationalNum(2, 3);
+	Y2[3][0] = RationalNum(2, 4);
+	EXPECT_ANY_THROW(LinearRegression(Y2, X));
+}
+
+TEST(LinearRegression, RightOut) {
+	Matrix<RationalNum> X(5, 3);
+	Matrix<RationalNum> Y(5, 1);
+	X[0][0] = RationalNum(1, 1);
+	X[1][0] = RationalNum(2, 1);
+	X[2][0] = RationalNum(8, 2);
+	X[3][0] = RationalNum(5, 2);
+	X[4][0] = RationalNum(1, 2);
+	X[0][1] = RationalNum(1, 1);
+	X[1][1] = RationalNum(1, 2);
+	X[2][1] = RationalNum(2, 1);
+	X[3][1] = RationalNum(6, 2);
+	X[4][1] = RationalNum(1, 2);
+	X[0][2] = RationalNum(2, 1);
+	X[1][2] = RationalNum(1, 2);
+	X[2][2] = RationalNum(4, 2);
+	X[3][2] = RationalNum(14, 2);
+	X[4][2] = RationalNum(8, 2);
+
+	Y[0][0] = RationalNum(1, 1);
+	Y[1][0] = RationalNum(4, 2);
+	Y[2][0] = RationalNum(12, 4);
+	Y[3][0] = RationalNum(5, 2);
+	Y[4][0] = RationalNum(1, 1);
+
+	Matrix<RationalNum> B = LinearRegression(Y, X);
+
+	EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_columns() + 1);
+	EXPECT_EQ(B[0][0].get_numerator(), 3841);
+	EXPECT_EQ(B[1][0].get_numerator(), 9389);
+	EXPECT_EQ(B[2][0].get_numerator(), -2977);
+	EXPECT_EQ(B[3][0].get_numerator(), 1591);
+}
+

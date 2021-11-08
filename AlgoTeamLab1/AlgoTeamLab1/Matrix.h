@@ -72,7 +72,7 @@ public:
 
 	// will inialize all with default constructor, so 0/1 for RationalNum and fill with contents of old matrix where possible
 	void expand(size_t new_number_of_rows, size_t new_number_of_columns) {
-		if ((new_number_of_rows == 0 && new_number_of_columns != 0) || (new_number_of_rows != 0 && new_number_of_columns == 0)) 
+		if ((new_number_of_rows == 0 && new_number_of_columns != 0) || (new_number_of_rows != 0 && new_number_of_columns == 0))
 			throw "Matrix: invalid dimension";
 		if (new_number_of_rows < m_number_of_rows || new_number_of_columns < m_number_of_columns)
 			throw "Matrix: Expand: dimensions must be greater that previous";
@@ -104,7 +104,7 @@ public:
 	}
 
 	// copy constructor
-	Matrix(const Matrix<T>& other) 
+	Matrix(const Matrix<T>& other)
 		: m_number_of_rows(other.m_number_of_rows), m_number_of_columns(other.m_number_of_columns)
 	{
 		allocate();
@@ -135,7 +135,7 @@ public:
 	}
 
 	// move constructor
-	Matrix(Matrix<T>&& other) noexcept 
+	Matrix(Matrix<T>&& other) noexcept
 		: m_number_of_rows(other.m_number_of_rows), m_number_of_columns(other.m_number_of_columns)
 	{
 		matrix = other.matrix;
@@ -263,5 +263,16 @@ public:
 	Matrix<T>& operator*=(const Matrix<T>& other) {
 		*this = *this * other;
 		return *this;
+	}
+
+	//Return transposed matrix
+	Matrix<T> transpose() {
+        Matrix<T> transpose_matrix(m_number_of_columns, m_number_of_rows);
+
+        for(int i = 0; i < m_number_of_rows; i++)
+            for(int j = 0; j < m_number_of_columns; j++)
+                transpose_matrix[j][i] = matrix[i][j];
+
+        return transpose_matrix;
 	}
 };

@@ -24,6 +24,12 @@
     <ClInclude Include="MatrixMultiplicationStrassenAlgorithm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="InverseLUDecomposition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LinearRegression.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RationalNum.cpp">
@@ -36,5 +42,10 @@
   <ItemGroup>
     <Text Include="strassen_algo_input.txt" />
     <Text Include="strassen_algo_output.txt" />
+    <Text Include="linear_regression_output.txt" />
+    <Text Include="linear_regression_input_X.txt" />
+    <Text Include="linear_regression_input_Y.txt" />
+    <Text Include="lu_decomposition_input.txt" />
+    <Text Include="lu_decomposition_output.txt" />
   </ItemGroup>
 </Project>
