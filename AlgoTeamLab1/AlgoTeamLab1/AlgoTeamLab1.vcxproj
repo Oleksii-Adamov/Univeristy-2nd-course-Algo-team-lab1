@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="GaussJordan.h" />
     <ClInclude Include="InverseLUDecomposition.h" />
     <ClInclude Include="LinearRegression.h" />
     <ClInclude Include="Matrix.h" />
@@ -150,6 +151,8 @@
     <ClCompile Include="RationalNum.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="gauss_jordan_input.txt" />
+    <Text Include="gauss_jordan_output.txt" />
     <Text Include="linear_regression_input_X.txt" />
     <Text Include="linear_regression_input_Y.txt" />
     <Text Include="linear_regression_output.txt" />

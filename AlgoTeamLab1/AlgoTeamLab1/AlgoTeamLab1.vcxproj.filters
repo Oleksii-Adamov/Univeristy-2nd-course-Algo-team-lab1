@@ -30,6 +30,9 @@
     <ClInclude Include="LinearRegression.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GaussJordan.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RationalNum.cpp">
@@ -47,5 +50,7 @@
     <Text Include="linear_regression_input_Y.txt" />
     <Text Include="lu_decomposition_input.txt" />
     <Text Include="lu_decomposition_output.txt" />
+    <Text Include="gauss_jordan_input.txt" />
+    <Text Include="gauss_jordan_output.txt" />
   </ItemGroup>
 </Project>

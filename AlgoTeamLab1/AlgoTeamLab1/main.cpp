@@ -6,6 +6,7 @@
 #include "Matrix.h"
 #include "InverseLUDecomposition.h"
 #include "LinearRegression.h"
+#include "GaussJordan.h"
 
 int main() {
 	// strassen algo input ouput, as I remember need to add time measurment
@@ -91,4 +92,22 @@ int main() {
         std::cerr << e << std::endl;
         regression_out << e << std::endl;
     }
+
+	std::ifstream GJ_in("gauss_jordan_input.txt");
+	std::ofstream GJ_out("gauss_jordan_output.txt");
+	try {
+		size_t gj_number_of_rows, gj_number_of_columns;
+		GJ_in >> gj_number_of_rows >> gj_number_of_columns;
+		Matrix<RationalNum> gj(gj_number_of_rows, gj_number_of_columns);
+		GJ_in >> gj;
+		auto start = std::chrono::high_resolution_clock::now();
+		Matrix<RationalNum> inv = Gaus_Jordan_inverse_matrix(gj);
+		auto end = std::chrono::high_resolution_clock::now();
+		GJ_out << inv;
+		GJ_out << "Matrix inverted for " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 << " milliseconds\n";
+	}
+	catch (const char* e) {
+		std::cerr << e << std::endl;
+		GJ_out << e << "\n";
+	}
 }
