@@ -85,7 +85,7 @@ int main() {
 		for (int i = 1; i < B.get_number_of_rows(); i++) {
 			regression_out << " + (" << B[i][0] << ")x" << i;
 		}
-        regression_out << "\nMultiplication has been done for" << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 << " milliseconds\n";
+        regression_out << "\nLinear Regression has been done for " << std::chrono::duration_cast<std::chrono::microseconds>(end - start).count() * 0.001 << " milliseconds\n";
     }
     catch (const char* e)
     {
