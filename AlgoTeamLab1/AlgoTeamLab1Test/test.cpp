@@ -2,7 +2,7 @@
 #include "../AlgoTeamLab1/RationalNum.h"
 #include "../AlgoTeamLab1/RationalNum.cpp"
 #include <fstream>
-#include <utility> 
+#include <utility>
 #include "../AlgoTeamLab1/Matrix.h"
 #include "../AlgoTeamLab1/InverseLUDecomposition.h"
 #include "../AlgoTeamLab1/LinearRegression.h"
@@ -136,7 +136,7 @@ TEST(RationalNumTest, Addition) {
 
 	RationalNum r2_1(1, 2), r2_2(-1, 2);
 	EXPECT_EQ(r2_1 + r2_2, RationalNum(0, 1));
-	
+
 	// one test for +=
 	r2_1 += r2_2;
 	EXPECT_EQ(r2_1, RationalNum(0, 1));
@@ -313,7 +313,7 @@ TEST(RationalNumTest, Division) {
 
 	RationalNum r7_1(-1, 3), r7_2(-1, 4);
 	EXPECT_EQ(r7_1 / r7_2, RationalNum(4, 3));
-	
+
 	// (1/3) / (2/3) = 1/2
 	RationalNum r8_1(1, 3), r8_2(2, 3);
 	EXPECT_EQ(r8_1 / r8_2, RationalNum(1, 2));
@@ -497,7 +497,7 @@ TEST(RationalNumTest, Istream) {
 	in >> r;
 	EXPECT_EQ(r.get_numerator(), 32);
 	EXPECT_EQ(r.get_denominator(), 33);
-	
+
 	// end of file
 	EXPECT_ANY_THROW(in >> r);
 
@@ -870,7 +870,7 @@ TEST(MatrixMultiplicationStrassenAlgo, Square) {
 	b[2][0] = RationalNum(1, 1);
 	b[2][1] = RationalNum(3, 1);
 	b[2][2] = RationalNum(2, 1);
-	
+
 	c = a * b;
 	EXPECT_EQ(c.get_number_of_rows(), 3);
 	EXPECT_EQ(c.get_number_of_columns(), 3);
@@ -944,7 +944,7 @@ TEST(MatrixMultiplicationStrassenAlgo, WrongInput) {
 	b = Matrix<RationalNum>(4, 3);
 	EXPECT_ANY_THROW(a * b);
 	EXPECT_ANY_THROW(a *= b);
-	
+
 }
 
 TEST(MatrixMultiplicationStrassenAlgo, Rectangle) {
@@ -1074,12 +1074,12 @@ TEST(LinearRegression, InvalidInput){
 	X[1][1] = RationalNum(6, 7);
 	X[2][1] = RationalNum(3, 4);
 	Matrix<RationalNum> B = LinearRegression(Y, X);
-	EXPECT_EQ(B.get_number_of_rows, X.get_number_of_rows);
+	EXPECT_EQ(B.get_number_of_rows(), X.get_number_of_rows());
 
 	Matrix<RationalNum> Y2(4, 1);
 	Y2[0][0] = RationalNum(2, 1);
 	Y2[1][0] = RationalNum(5, 4);
 	Y2[2][0] = RationalNum(2, 3);
 	Y2[3][0] = RationalNum(2, 4);
-	EXCEPT_ANY_TROW(LinearRegression(Y2, X);
+	EXCEPT_ANY_TROW(LinearRegression(Y2, X));
 }
