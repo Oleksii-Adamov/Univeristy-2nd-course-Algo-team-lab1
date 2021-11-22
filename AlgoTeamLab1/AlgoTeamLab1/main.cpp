@@ -9,7 +9,7 @@
 #include "GaussJordan.h"
 
 int main() {
-	// strassen algo input ouput, as I remember need to add time measurment
+	// strassen algo input ouput, with time measurment
 	std::ifstream in("strassen_algo_input.txt");
 	std::ofstream out("strassen_algo_output.txt");
 	try {

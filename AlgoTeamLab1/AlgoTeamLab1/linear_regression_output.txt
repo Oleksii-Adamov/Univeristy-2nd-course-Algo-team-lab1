@@ -3,4 +3,4 @@ b1: 9389/12307
 b2: -2977/12307
 b3: 1591/12307
 y = 3841/12307 + (9389/12307)x1 + (-2977/12307)x2 + (1591/12307)x3
-Linear Regression has been done for 2.618 milliseconds
+Linear Regression has been done for 18.71 milliseconds
